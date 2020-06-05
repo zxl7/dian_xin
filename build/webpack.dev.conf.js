@@ -47,11 +47,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     historyApiFallback: true,
     proxy: {
       '/WP': {
-        target: 'http://171.220.241.48:20800',
+        target: 'http://171.220.241.48:20800/',
         changeOrigin: true,
       },
       '/api': {
-        target: 'http://wsq.cdyoue.com/api',
+        target: 'http://wsq.cdyoue.com',
         changeOrigin: true,
       },
 
