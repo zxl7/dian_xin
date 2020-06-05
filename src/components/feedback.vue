@@ -3,13 +3,13 @@
     <!-- <header class="tabnar-header">
       <i @click="back" class="after"></i>
       我的反馈
-    </header> -->
+    </header>-->
     <div class="banner">
       <div class="banner_title">
         <h1 class="banner_title_h1">我的反馈</h1>
         <p class="banner_title_p">Feedback</p>
       </div>
-      <img alt class="tickling_img" src="@/assets/img/image_我的反馈.png" />
+      <img alt class="tickling_img" src="https://source2.softspirit.cn/wsq/hd_fb.jpg" />
     </div>
     <div class="tickling_main">
       <van-list
@@ -37,6 +37,7 @@
               <span class="end" v-if="item.status == 2">完结</span>
               <span class v-if="item.status == 3">退单</span>
               <span class v-if="item.status == 5">转派天阙</span>
+              <span class v-if="item.status == 7">天阙处理完成</span>
             </p>
             <p class="tickling_main_right_reply">{{item.dealSubjust}}</p>
           </aside>
@@ -55,15 +56,24 @@ export default {
       loading: false,
       finished: false,
       immediate_check: false,
-      loadNum: 1
+      loadNum: 1,
+      name: '',
+      callNumber: ''
 
     }
   },
   mounted () {
+    // let query = this.$route.query
+    // this.name = query.name
+    // this.phone = query.phone
     let json = {
       'pageNum': this.loadNum,
-      'pageSize': '30'
+      'pageSize': '30',
+      'name': window.name,
+      'callNumber': window.phone
     }
+    // console.log(query)
+
     api.postFeedBackListAPI(json).then(res => {
       if (res.status === 200) { this.list = res.data.data.list }
     })
