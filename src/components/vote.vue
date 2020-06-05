@@ -17,7 +17,7 @@
                   <h2>{{item.title}}</h2>
                   <h3>{{ToText(item.html_body)}}</h3>
                   <p>
-                    <span>2020-02-20 08:12:00</span>
+                    <span>{{item.DataTime}}</span>
                     <span class="underway">进行中</span>
                   </p>
                 </aside>
@@ -34,7 +34,7 @@
                   <h2>{{item.title}}</h2>
                   <h3>{{ToText(item.html_body)}}</h3>
                   <p>
-                    <span>2020-02-20 08:12:00</span>
+                    <span>{{item.DataTime}}</span>
                     <span class="end">已结束</span>
                   </p>
                 </aside>
@@ -54,7 +54,7 @@
                   <h2>{{item.title}}</h2>
                   <h3>{{ToText(item.html_body)}}</h3>
                   <p>
-                    <span>2020-02-20 08:12:00</span>
+                    <span>{{item.DataTime}}</span>
                     <span class="underway">进行中</span>
                   </p>
                 </aside>
@@ -73,7 +73,7 @@
                   <h2>{{item.title}}</h2>
                   <h3>{{ToText(item.html_body)}}</h3>
                   <p>
-                    <span>2020-02-20 08:12:00</span>
+                    <span>{{item.DataTime}}</span>
                     <span class="end">已结束</span>
                   </p>
                 </aside>
@@ -112,11 +112,27 @@ export default {
     api.getUnderwayVoteAPI(headers).then(res => {
       if (res.status === 200) {
         this.listUnderway = res.data
+        for (let i = 0; i < this.listUnderway.length; i++) {
+          let DataTime = this.listUnderway[i].created_at
+          let firstDataTime = DataTime.slice(0, 10)
+          let lastDataTime = DataTime.slice(11, 19)
+          DataTime = firstDataTime + ' ' + lastDataTime
+
+          this.listUnderway[i].DataTime = DataTime
+        }
       }
     })
     api.getEndVoteAPI(headers).then(res => {
       if (res.status === 200) {
         this.listEnd = res.data
+        for (let i = 0; i < this.listEnd.length; i++) {
+          let DataTime = this.listEnd[i].created_at
+          let firstDataTime = DataTime.slice(0, 10)
+          let lastDataTime = DataTime.slice(11, 19)
+          DataTime = firstDataTime + ' ' + lastDataTime
+
+          this.listEnd[i].DataTime = DataTime
+        }
       }
     })
   },

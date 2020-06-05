@@ -18,7 +18,7 @@
               <h2>{{item.title}}</h2>
               <h3>{{ToText(item.html_body)}}</h3>
               <p>
-                <span>2020-02-20 08:12:00</span>
+                <span>{{item.DataTime}}</span>
               </p>
             </aside>
           </div>
@@ -45,6 +45,14 @@ export default {
     api.getActivityAPI(headers).then(res => {
       if (res.status === 200) {
         this.list = res.data
+        for (let i = 0; i < this.list.length; i++) {
+          let DataTime = this.list[i].created_at
+          let firstDataTime = DataTime.slice(0, 10)
+          let lastDataTime = DataTime.slice(11, 19)
+          DataTime = firstDataTime + ' ' + lastDataTime
+
+          this.list[i].DataTime = DataTime
+        }
       }
     })
   },
