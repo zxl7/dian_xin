@@ -15,7 +15,7 @@
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
-                  <h3>{{ToText(item.html_body)}}</h3>
+                  <h3>{{toText(item.html_body)}}</h3>
                   <p>
                     <span>{{item.DataTime}}</span>
                     <span class="underway">进行中</span>
@@ -32,14 +32,14 @@
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
-                  <h3>{{ToText(item.html_body)}}</h3>
+                  <h3>{{toText(item.description)}}</h3>
                   <p>
                     <span>{{item.DataTime}}</span>
                     <span class="end">已结束</span>
                   </p>
                 </aside>
                 <aside class="vote_main_right">
-                  <img :src="item.cover" class="vote_main_right_img" />
+                  <img :src="toImg(item.description)" class="vote_main_right_img" />
                 </aside>
               </div>
             </a>
@@ -52,7 +52,7 @@
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
-                  <h3>{{ToText(item.html_body)}}</h3>
+                  <h3>{{toText(item.html_body)}}</h3>
                   <p>
                     <span>{{item.DataTime}}</span>
                     <span class="underway">进行中</span>
@@ -71,7 +71,7 @@
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
-                  <h3>{{ToText(item.html_body)}}</h3>
+                  <h3>{{11}}</h3>
                   <p>
                     <span>{{item.DataTime}}</span>
                     <span class="end">已结束</span>
@@ -122,26 +122,41 @@ export default {
         }
       }
     })
-    api.getEndVoteAPI(headers).then(res => {
-      if (res.status === 200) {
-        this.listEnd = res.data
-        for (let i = 0; i < this.listEnd.length; i++) {
-          let DataTime = this.listEnd[i].created_at
-          let firstDataTime = DataTime.slice(0, 10)
-          let lastDataTime = DataTime.slice(11, 19)
-          DataTime = firstDataTime + ' ' + lastDataTime
+    // api.getEndVoteAPI(headers).then(res => {
+    //   if (res.status === 200) {
+    //     this.listEnd = res.data
+    //     for (let i = 0; i < this.listEnd.length; i++) {
+    //       let DataTime = this.listEnd[i].created_at
+    //       let firstDataTime = DataTime.slice(0, 10)
+    //       let lastDataTime = DataTime.slice(11, 19)
+    //       DataTime = firstDataTime + ' ' + lastDataTime
 
-          this.listEnd[i].DataTime = DataTime
-        }
+    //       this.listEnd[i].DataTime = DataTime
+    //     }
+    //   }
+    // })
+    api.getVoteAPI(headers).then(res => {
+      console.log(res)
+      this.listEnd = res.data
+      for (let i = 0; i < this.listEnd.length; i++) {
+        let DataTime = this.listEnd[i].created_at
+        let firstDataTime = DataTime.slice(0, 10)
+        let lastDataTime = DataTime.slice(11, 19)
+        DataTime = firstDataTime + ' ' + lastDataTime
+
+        this.listEnd[i].DataTime = DataTime
       }
     })
   },
   methods: {
-    ToText (text) {
+    toText (text) {
       return text.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ')
     },
-    back () {
-      this.$router.go(-1)
+    toImg (text) {
+      // eslint-disable-next-line one-var
+      let pattern = /http.*(?=">)/
+      console.log(text.match(pattern))
+      return (text.match(pattern))
     }
   }
 }

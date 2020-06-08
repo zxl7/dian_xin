@@ -16,6 +16,9 @@ export default {
   getUnderwayVoteAPI (headers) {
     return http.get('/api/v4/categories/258/pages', '', headers)
   },
+  getVoteAPI (headers) {
+    return http.get('/api/v4/tags/2/taggable_forms', '', headers)
+  },
   getEndVoteAPI (headers) {
     return http.get('/api/v4/categories/259/pages', '', headers)
   },
