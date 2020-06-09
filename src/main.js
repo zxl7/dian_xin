@@ -8,14 +8,14 @@ import './assets/icon/style.css'
 import './assets/icon/styleTwo.css'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
-import { List, Tab, Tabs } from 'vant'
+import { List, Tab, Tabs, Toast } from 'vant'
 
 Vue.prototype.$axios = axios
 
 Vue.use(VueCookies)
 
 Vue.use(List)
-
+Vue.use(Toast)
 Vue.use(Tab)
 Vue.use(Tabs)
 
