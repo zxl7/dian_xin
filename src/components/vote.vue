@@ -27,8 +27,11 @@
               </div>
             </a>
           </div>
-          <div :key="item.id" v-for="item in listEnd">
-            <a :href="hrefEnd + item.id" class="vote_a">
+          <div :key="item.id" v-for="(item,index) in listEnd">
+            <router-link
+              :to="{name:'voting',query:{userId:item.id,userIndex:index}}"
+              class="vote_a"
+            >
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
@@ -42,7 +45,7 @@
                   <img :src="toImg(item.description)" class="vote_main_right_img" />
                 </aside>
               </div>
-            </a>
+            </router-link>
           </div>
         </van-tab>
 
@@ -143,7 +146,6 @@ export default {
         let firstDataTime = DataTime.slice(0, 10)
         let lastDataTime = DataTime.slice(11, 19)
         DataTime = firstDataTime + ' ' + lastDataTime
-
         this.listEnd[i].DataTime = DataTime
       }
     })
@@ -155,7 +157,6 @@ export default {
     toImg (text) {
       // eslint-disable-next-line one-var
       let pattern = /http.*(?=">)/
-      console.log(text.match(pattern))
       return (text.match(pattern))
     }
   }
