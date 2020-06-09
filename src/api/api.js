@@ -12,14 +12,18 @@ export default {
   postFeedBackListAPI (json) {
     return http.post('/WP/event/search', json)
   },
+
   // 投票
-  getUnderwayVoteAPI () {
-    return http.get('/api/v4/categories/258/pages', '')
+  // 进行中
+  getVoteListSuccessAPI () {
+    return http.get('/api/v4/tags/2/taggable_forms', '')
   },
-  getEndVoteAPI () {
-    return http.get('/api/v4/categories/259/pages', '')
+  // 已结束
+  getVoteListEndAPI () {
+    return http.get('/api/v4/tags/3/taggable_forms', '')
   },
-  getVoteAPI () {
+  // 三级页面header
+  getVoteListAPI () {
     return http.get('/api/v4/tags/2/taggable_forms', '')
   },
   getVotingAPI (url) {

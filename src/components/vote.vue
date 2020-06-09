@@ -10,8 +10,11 @@
     <div class="vote_main">
       <van-tabs type="card" v-model="active">
         <van-tab title="全部投票">
-          <div :key="item.id" v-for="item in listUnderway">
-            <a :href="hrefUnderway+item.id" class="vote_a">
+          <div :key="item.id" v-for="(item,index) in  listUnderway">
+            <router-link
+              :to="{name:'voting',query:{userId:item.id,userIndex:index}}"
+              class="vote_a"
+            >
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
@@ -25,7 +28,7 @@
                   <img :src="item.cover" class="vote_main_right_img" />
                 </aside>
               </div>
-            </a>
+            </router-link>
           </div>
           <div :key="item.id" v-for="(item,index) in listEnd">
             <router-link
@@ -50,8 +53,11 @@
         </van-tab>
 
         <van-tab title="进行中">
-          <div :key="item.id" v-for="item in listUnderway">
-            <a :href="hrefUnderway+item.id" class="vote_a">
+          <div :key="item.id" v-for="(item,index) in  listUnderway">
+            <router-link
+              :to="{name:'voting',query:{userId:item.id,userIndex:index}}"
+              class="vote_a"
+            >
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
@@ -65,26 +71,29 @@
                   <img :src="item.cover" class="vote_main_right_img" />
                 </aside>
               </div>
-            </a>
+            </router-link>
           </div>
         </van-tab>
         <van-tab title="已结束">
-          <div :key="item.id" v-for="item in listEnd">
-            <a :href="hrefEnd + item.id" class="vote_a">
+          <div :key="item.id" v-for="(item,index) in listEnd">
+            <router-link
+              :to="{name:'voting',query:{userId:item.id,userIndex:index}}"
+              class="vote_a"
+            >
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
-                  <h3>{{11}}</h3>
+                  <h3>{{toText(item.description)}}</h3>
                   <p>
                     <span>{{item.DataTime}}</span>
                     <span class="end">已结束</span>
                   </p>
                 </aside>
                 <aside class="vote_main_right">
-                  <img :src="item.cover" class="vote_main_right_img" />
+                  <img :src="toImg(item.description)" class="vote_main_right_img" />
                 </aside>
               </div>
-            </a>
+            </router-link>
           </div>
         </van-tab>
       </van-tabs>
@@ -103,16 +112,11 @@ export default {
       finished: false,
       immediate_check: false,
       loadNum: 1,
-      active: 0,
-      hrefUnderway: 'http://wsq.cdyoue.com/namespaces/1/categories/258/pages/',
-      hrefEnd: 'http://wsq.cdyoue.com/namespaces/1/categories/259/pages/'
+      active: 0
     }
   },
   mounted () {
-    let headers = {
-      Authorization: '4e4dd921c32c38e87c87a6cf7ef7b41847127080992f8a2f1daa9c69e0fc5375:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lc3BhY2VfaWQiOjF9.KfdM20pGpvdasQuWJBT8Ta6wlwQKS5vQnDxwJzAXKVY'
-    }
-    api.getUnderwayVoteAPI(headers).then(res => {
+    api.getVoteListSuccessAPI().then(res => {
       if (res.status === 200) {
         this.listUnderway = res.data
         for (let i = 0; i < this.listUnderway.length; i++) {
@@ -120,42 +124,29 @@ export default {
           let firstDataTime = DataTime.slice(0, 10)
           let lastDataTime = DataTime.slice(11, 19)
           DataTime = firstDataTime + ' ' + lastDataTime
-
           this.listUnderway[i].DataTime = DataTime
         }
       }
     })
-    // api.getEndVoteAPI(headers).then(res => {
-    //   if (res.status === 200) {
-    //     this.listEnd = res.data
-    //     for (let i = 0; i < this.listEnd.length; i++) {
-    //       let DataTime = this.listEnd[i].created_at
-    //       let firstDataTime = DataTime.slice(0, 10)
-    //       let lastDataTime = DataTime.slice(11, 19)
-    //       DataTime = firstDataTime + ' ' + lastDataTime
+    api.getVoteListEndAPI().then(res => {
+      if (res.status === 200) {
+        this.listEnd = res.data
+        for (let i = 0; i < this.listEnd.length; i++) {
+          let DataTime = this.listEnd[i].created_at
+          let firstDataTime = DataTime.slice(0, 10)
+          let lastDataTime = DataTime.slice(11, 19)
+          DataTime = firstDataTime + ' ' + lastDataTime
 
-    //       this.listEnd[i].DataTime = DataTime
-    //     }
-    //   }
-    // })
-    api.getVoteAPI(headers).then(res => {
-      console.log(res)
-      this.listEnd = res.data
-      for (let i = 0; i < this.listEnd.length; i++) {
-        let DataTime = this.listEnd[i].created_at
-        let firstDataTime = DataTime.slice(0, 10)
-        let lastDataTime = DataTime.slice(11, 19)
-        DataTime = firstDataTime + ' ' + lastDataTime
-        this.listEnd[i].DataTime = DataTime
+          this.listEnd[i].DataTime = DataTime
+        }
       }
     })
   },
   methods: {
     toText (text) {
-      return text.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ')
+      if (text) { return text.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ') }
     },
     toImg (text) {
-      // eslint-disable-next-line one-var
       let pattern = /http.*(?=">)/
       return (text.match(pattern))
     }
