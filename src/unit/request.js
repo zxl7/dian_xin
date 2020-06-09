@@ -14,7 +14,8 @@ const service = axios.create({
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json;charset=UTF-8',
-    'cache-control': 'max-age=0, private, must-revalidate'
+    'cache-control': 'max-age=0, private, must-revalidate',
+    'Authorization': '4e4dd921c32c38e87c87a6cf7ef7b41847127080992f8a2f1daa9c69e0fc5375:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lc3BhY2VfaWQiOjF9.KfdM20pGpvdasQuWJBT8Ta6wlwQKS5vQnDxwJzAXKVY'
   }
 })
 // 2.请求拦截器
