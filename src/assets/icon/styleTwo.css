@@ -30,6 +30,7 @@
   content: "\1f5f8";
   display: inline-block;
   line-height: 24px;
+  color: #df2c21;
 }
 .icon-icon-thumb-o:after {
   content: "\e901";
