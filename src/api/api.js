@@ -13,19 +13,22 @@ export default {
     return http.post('/WP/event/search', json)
   },
   // 投票
-  getUnderwayVoteAPI (headers) {
-    return http.get('/api/v4/categories/258/pages', '', headers)
+  getUnderwayVoteAPI () {
+    return http.get('/api/v4/categories/258/pages', '')
   },
-  getVoteAPI (headers) {
-    return http.get('/api/v4/tags/2/taggable_forms', '', headers)
+  getEndVoteAPI () {
+    return http.get('/api/v4/categories/259/pages', '')
   },
-  getEndVoteAPI (headers) {
-    return http.get('/api/v4/categories/259/pages', '', headers)
+  getVoteAPI () {
+    return http.get('/api/v4/tags/2/taggable_forms', '')
+  },
+  getVotingAPI (url) {
+    return http.get(url)
   },
 
   // 活动征集
-  getActivityAPI (headers) {
-    return http.get('/api/v4/categories/8/pages', '', headers)
+  getActivityAPI () {
+    return http.get('/api/v4/categories/8/pages', '')
   }
 
 }
