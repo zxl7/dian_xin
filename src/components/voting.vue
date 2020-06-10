@@ -27,7 +27,6 @@
               >{{item.status?'投票':'已投票'}}</i>
             </div>
             <img v-show="vote" />
-            <!-- <i :class="item.status?'icon-icon-thumb-o':'icon-icon-thumb'"></i> -->
           </div>
         </div>
       </div>
@@ -37,7 +36,6 @@
 
 <script>
 import api from '@/api/api'
-// import cookies from 'js-cookie'
 
 export default {
   data () {
@@ -46,7 +44,7 @@ export default {
       tableId: '',
       userIndex: '',
       vote: true,
-      url: '/api/v4/forms/11/responses',
+      url: '',
       listData: [],
       formData: {},
       openId: '',
@@ -60,6 +58,7 @@ export default {
     this.userIndex = this.$route.query.userIndex
     this.tableId = this.$route.query.tableId
     this.openId = this.$route.query.openId
+    this.url = '/api/v4/forms/' + this.tableId + '/responses'
 
     let infoData = {}
     infoData.openid = this.openId
@@ -78,7 +77,6 @@ export default {
       let data = res.data
 
       for (let i = 0; i < res.data.length; i++) {
-        // this.listData.push({})
         let dataObj = {}
         this.orderFieldList.forEach(element => {
           let value = data[i].mapped_values[element].exported_value[0]
