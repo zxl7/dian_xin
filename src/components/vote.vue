@@ -12,7 +12,7 @@
         <van-tab title="全部投票">
           <div :key="item.id" v-for="(item,index) in  listUnderway">
             <router-link
-              :to="{name:'voting',query:{userId:item.id,userIndex:index}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openId:item.openId}}"
               class="vote_a"
             >
               <div class="vote_main_center">
@@ -32,7 +32,7 @@
           </div>
           <div :key="item.id" v-for="(item,index) in listEnd">
             <router-link
-              :to="{name:'voting',query:{userId:item.id,userIndex:index}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openId:item.openId}}"
               class="vote_a"
             >
               <div class="vote_main_center">
@@ -55,7 +55,7 @@
         <van-tab title="进行中">
           <div :key="item.id" v-for="(item,index) in  listUnderway">
             <router-link
-              :to="{name:'voting',query:{userId:item.id,userIndex:index}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openId:item.openId}}"
               class="vote_a"
             >
               <div class="vote_main_center">
@@ -77,7 +77,7 @@
         <van-tab title="已结束">
           <div :key="item.id" v-for="(item,index) in listEnd">
             <router-link
-              :to="{name:'voting',query:{userId:item.id,userIndex:index}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openId:item.openId}}"
               class="vote_a"
             >
               <div class="vote_main_center">
@@ -112,8 +112,13 @@ export default {
       finished: false,
       immediate_check: false,
       loadNum: 1,
-      active: 0
+      active: 0,
+      openId: ''
     }
+  },
+  created () {
+    this.openId = this.$route.query.openId
+    console.log(this.openId)
   },
   mounted () {
     api.getVoteListSuccessAPI().then(res => {
@@ -125,6 +130,7 @@ export default {
           let lastDataTime = DataTime.slice(11, 19)
           DataTime = firstDataTime + ' ' + lastDataTime
           this.listUnderway[i].DataTime = DataTime
+          this.listUnderway[i].openId = this.openId
         }
       }
     })
@@ -138,6 +144,7 @@ export default {
           DataTime = firstDataTime + ' ' + lastDataTime
 
           this.listEnd[i].DataTime = DataTime
+          this.listEnd[i].openId = this.openId
         }
       }
     })
