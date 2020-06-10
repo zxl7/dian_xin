@@ -248,6 +248,7 @@ export default {
 
         .voting_content_vote_item_title_left {
           width: 100%;
+          text-align: center;
 
           .voting_content_vote_item_title_left_before {
             background: #2196f0;
