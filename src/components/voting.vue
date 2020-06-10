@@ -255,7 +255,7 @@ export default {
             border-radius: 4px;
             color: #fff;
             width: 90%;
-            margin-top: 20px;
+            margin: 20px auto 0px;
             display: inline-block;
             text-align: center;
             font-size: 16px;
@@ -268,7 +268,7 @@ export default {
             border-radius: 4px;
             color: #fff;
             width: 90%;
-            margin-top: 20px;
+            margin: 20px auto 0px;
             display: inline-block;
             text-align: center;
             font-size: 16px;
