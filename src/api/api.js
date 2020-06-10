@@ -14,6 +14,14 @@ export default {
   },
 
   // 投票
+  postVoteCreateAPI (data) {
+    return http.post('/mobile/wsq/vote/create', data)
+  },
+  // 查询
+  postVoteInfoAPI (data) {
+    return http.post('/mobile/wsq/vote/info', data)
+  },
+
   // 进行中
   getVoteListSuccessAPI () {
     return http.get('/api/v4/tags/2/taggable_forms', '')
