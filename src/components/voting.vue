@@ -159,33 +159,33 @@ export default {
 <style lang="scss" scoped>
 .voting_header {
   text-align: left;
-  margin: 1.625rem 0.9375rem 1.25rem;
+  margin: 26px 15px 20px;
 
   h2 {
     font-family: PingFangSC-Medium;
-    font-size: 1.25rem;
+    font-size: 20px;
     color: #2e2e2e;
     letter-spacing: 0;
   }
   h4 {
-    margin: 1rem auto;
+    margin: 16px auto;
     font-family: PingFangSC-Medium;
-    font-size: 0.8125rem;
+    font-size: 14px;
     color: #bcbcbc;
     letter-spacing: 0;
   }
   p {
     font-family: PingFangSC-Regular;
-    font-size: 1rem;
+    font-size: 16px;
     color: #2e2e2e;
     letter-spacing: 0;
     text-align: justify;
-    line-height: 1.5rem;
+    line-height: 24px;
   }
 }
 .voting_content {
-  min-height: 37.5rem;
-  padding-bottom: 6.25rem;
+  min-height: 600px;
+  padding-bottom: 100px;
   text-align: center;
   background: url('~@/assets/img/bg.png');
   background-size: cover;
@@ -194,17 +194,17 @@ export default {
     display: inline-block;
     text-align: center;
     font-family: PingFangSC-Medium;
-    font-size: 1rem;
+    font-size: 16px;
     color: #ffffff;
     letter-spacing: 0;
-    line-height: 1.5rem;
-    margin: 1.25rem 5rem;
+    line-height: 24px;
+    margin: 20px 80px;
 
     .voting_span {
       margin: 0px 8px;
     }
     .voting_img {
-      width: 1.5rem;
+      width: 24px;
     }
   }
   .voting_content_vote {
@@ -217,8 +217,8 @@ export default {
       margin-bottom: 9px;
       box-sizing: border-box;
       position: relative;
-      width: 10.5rem;
-      height: 16.375rem;
+      width:  168px;
+      height: 262px;
       padding: 6px;
       background: #ffffff;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
@@ -245,8 +245,8 @@ export default {
       }
 
       .voting_content_vote_item_img {
-        width: 9.75rem;
-        height: 9.75rem;
+        width: 156px;
+        height: 156px;
       }
       .voting_content_vote_item_p {
         text-align: left;
