@@ -68,7 +68,7 @@
                   </p>
                 </aside>
                 <aside class="vote_main_right">
-                  <img :src="item.cover" class="vote_main_right_img" />
+                  <img :src="toImg(item.description)" class="vote_main_right_img" />
                 </aside>
               </div>
             </router-link>

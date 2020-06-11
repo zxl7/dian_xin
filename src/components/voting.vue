@@ -16,7 +16,7 @@
         <div :key="item.id" class="voting_content_vote_item" v-for="item in listData">
           <i class="voting_content_vote_item_i">{{item.voteId}}号</i>
 
-          <img :src="toImg(item.imgUrl)" class="voting_content_vote_item_img" />
+          <img :src="item.img_url" class="voting_content_vote_item_img" />
           <div class="voting_content_vote_item_title">
             <i class="voting_content_vote_item_i_after">{{item.voteCount}}票</i>
             <div class="voting_content_vote_item_title_left">
@@ -88,8 +88,18 @@ export default {
           dataObj.status = true
           dataObj.voteCount = 0
         })
+        // 图片地址解析
+        for (let y = 0; y < res.data[i].entries.length; y++) {
+          if (res.data[i].entries[y].attachment) {
+            let str = res.data[i].entries[y].attachment.download_url
+            let url = str.slice(0, str.indexOf('?'))
+            dataObj.img_url = url
+          }
+        }
+
         dataList.push(dataObj)
       }
+      console.log(dataList)
 
       // 定义投票状态
       api.postVoteInfoAPI(infoData).then(res => {
