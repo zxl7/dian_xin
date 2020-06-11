@@ -10,16 +10,16 @@ import http from '../unit/http'
 
 export default {
   postFeedBackListAPI (json) {
-    return http.post('/WP/event/search', json)
+    return http.post('http://192.168.11.73:8081/WP/event/search', json)
   },
 
   // 投票
   postVoteCreateAPI (data) {
-    return http.post('/mobile/wsq/vote/create', data)
+    return http.post('http://wsq.softspirit.cn/mobile/wsq/vote/create', data)
   },
   // 查询
   postVoteInfoAPI (data) {
-    return http.post('/mobile/wsq/vote/info', data)
+    return http.post('http://wsq.softspirit.cn/mobile/wsq/vote/info', data)
   },
 
   // 进行中

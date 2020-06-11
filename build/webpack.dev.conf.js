@@ -47,7 +47,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     historyApiFallback: true,
     proxy: {
       '/WP': {
-        target: 'http://171.220.241.48:20800/',
+        target: 'http://192.168.11.73:8081/',
         changeOrigin: true,
       },
       '/api': {
@@ -55,7 +55,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         changeOrigin: true,
       },
       '/mobile': {
-        target: 'http://wsq.softspirit.cn:3111/',
+        target: 'http://wsq.softspirit.cn',
         changeOrigin: true,
       },
 
