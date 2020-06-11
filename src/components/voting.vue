@@ -87,17 +87,19 @@ export default {
         dataList.push(dataObj)
       }
 
-      // 查看投票状态
+      // 定义投票状态
       api.postVoteInfoAPI(infoData).then(res => {
         if (res.data.errcode === 0) {
-          this.vote = false
           for (let i = 0; i < dataList.length; i++) {
             if (res.data.data.options[i + 1]) {
               dataList[i].voteCount = res.data.data.options[i + 1]
             }
           }
-          let voteId = res.data.data.voteId
-          dataList[voteId - 1].status = false
+          if (res.data.data.voteId) {
+            this.vote = false
+            let voteId = res.data.data.voteId
+            dataList[voteId - 1].status = false
+          }
         }
       })
       this.listData = dataList
