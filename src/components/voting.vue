@@ -15,19 +15,15 @@
       <div class="voting_content_vote">
         <div :key="item.id" class="voting_content_vote_item" v-for="item in listData">
           <i class="voting_content_vote_item_i">{{item.voteId}}号</i>
+          <i class="voting_content_vote_item_i_bottom">{{item.voteCount}}票</i>
 
           <img :src="item.img_url" class="voting_content_vote_item_img" />
-          <div class="voting_content_vote_item_title">
-            <i class="voting_content_vote_item_i_after">{{item.voteCount}}票</i>
-            <div class="voting_content_vote_item_title_left">
-              <p>{{item.voteOption}}</p>
-              <i
-                :class="item.status? 'voting_content_vote_item_title_left_before':'voting_content_vote_item_title_left_after'"
-                @click="voting(item)"
-              >{{item.status?'投票':'已投票'}}</i>
-            </div>
-            <img v-show="vote" />
-          </div>
+          <p class="voting_content_vote_item_p">{{item.voteOption}}</p>
+          <i
+            :class="item.status? 'voting_content_vote_item_i_before':'voting_content_vote_item_i_after'"
+            @click="voting(item)"
+          >{{item.status?'投票':'已投票'}}</i>
+          <img v-show="vote" />
         </div>
       </div>
     </aside>
@@ -163,33 +159,33 @@ export default {
 <style lang="scss" scoped>
 .voting_header {
   text-align: left;
-  margin: 26px 15px 20px;
+  margin: 1.625rem 0.9375rem 1.25rem;
 
   h2 {
     font-family: PingFangSC-Medium;
-    font-size: 20px;
+    font-size: 1.25rem;
     color: #2e2e2e;
     letter-spacing: 0;
   }
   h4 {
-    margin: 16px auto;
+    margin: 1rem auto;
     font-family: PingFangSC-Medium;
-    font-size: 13px;
+    font-size: 0.8125rem;
     color: #bcbcbc;
     letter-spacing: 0;
   }
   p {
     font-family: PingFangSC-Regular;
-    font-size: 16px;
+    font-size: 1rem;
     color: #2e2e2e;
     letter-spacing: 0;
     text-align: justify;
-    line-height: 24px;
+    line-height: 1.5rem;
   }
 }
 .voting_content {
-  min-height: 600px;
-  padding-bottom: 100px;
+  min-height: 37.5rem;
+  padding-bottom: 6.25rem;
   text-align: center;
   background: url('~@/assets/img/bg.png');
   background-size: cover;
@@ -198,17 +194,17 @@ export default {
     display: inline-block;
     text-align: center;
     font-family: PingFangSC-Medium;
-    font-size: 16px;
+    font-size: 1rem;
     color: #ffffff;
     letter-spacing: 0;
-    line-height: 24px;
-    margin: 20px 80px;
+    line-height: 1.5rem;
+    margin: 1.25rem 5rem;
 
     .voting_span {
       margin: 0px 8px;
     }
     .voting_img {
-      width: 24px;
+      width: 1.5rem;
     }
   }
   .voting_content_vote {
@@ -218,12 +214,14 @@ export default {
     flex-wrap: wrap;
 
     .voting_content_vote_item {
+      margin-bottom: 9px;
+      box-sizing: border-box;
       position: relative;
-      margin: 5px;
-      width: 47%;
+      width: 10.5rem;
+      height: 16.375rem;
+      padding: 6px;
       background: #ffffff;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
-      border-radius: 2px;
       border-radius: 2px;
 
       .voting_content_vote_item_i {
@@ -247,83 +245,70 @@ export default {
       }
 
       .voting_content_vote_item_img {
-        padding: 6px;
-        width: 90%;
+        width: 9.75rem;
+        height: 9.75rem;
       }
-      .voting_content_vote_item_title {
-        position: relative;
-        font-family: PingFangSC-Medium;
+      .voting_content_vote_item_p {
+        text-align: left;
+        margin-top: 8px;
+        width: 100%;
         font-size: 16px;
         color: #2e2e2e;
         letter-spacing: 0;
-        padding: 6px;
         line-height: 24px;
-        display: flex;
-        text-align: left;
-        justify-content: space-between;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* 行数*/
+        -webkit-box-orient: vertical;
+      }
 
-        .voting_content_vote_item_title_left {
-          width: 100%;
-          text-align: center;
+      .voting_content_vote_item_i_before {
+        background: #2196f0;
+        border-radius: 4px;
+        border-radius: 4px;
+        color: #fff;
+        width: 92.8%;
+        display: inline-block;
+        text-align: center;
+        font-size: 16px;
+        position: absolute;
+        bottom: 6px;
+        left: 6px;
+        line-height: 26px;
+      }
 
-          .voting_content_vote_item_title_left_before {
-            background: #2196f0;
-            border-radius: 4px;
-            border-radius: 4px;
-            color: #fff;
-            width: 90%;
-            margin: 20px auto 0px;
-            display: inline-block;
-            text-align: center;
-            font-size: 16px;
-            line-height: 26px;
-          }
+      .voting_content_vote_item_i_after {
+        background: #ccc;
+        border-radius: 4px;
+        border-radius: 4px;
+        color: #fff;
+        width: 92.8%;
+        display: inline-block;
+        text-align: center;
+        font-size: 16px;
+        position: absolute;
+        bottom: 6px;
+        left: 6px;
+        line-height: 26px;
+      }
 
-          .voting_content_vote_item_title_left_after {
-            background: #ccc;
-            border-radius: 4px;
-            border-radius: 4px;
-            color: #fff;
-            width: 90%;
-            margin: 20px auto 0px;
-            display: inline-block;
-            text-align: center;
-            font-size: 16px;
-            line-height: 26px;
-          }
-        }
-
-        p {
-          font-family: PingFangSC-Medium;
-          font-size: 16px;
-          color: #2e2e2e;
-          letter-spacing: 0;
-          line-height: 24px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          word-break: break-all;
-          display: -webkit-box;
-          -webkit-line-clamp: 2; /* 行数*/
-          -webkit-box-orient: vertical;
-          text-align: left;
-        }
-
-        .voting_content_vote_item_i_after {
-          position: absolute;
-          top: -26px;
-          right: 8px;
-          padding-left: 10px;
-          font-size: 16px;
-          color: #ffffff;
-          letter-spacing: 0;
-          text-align: right;
-          background-image: linear-gradient(
-            45deg,
-            #45c7fa 0%,
-            rgba(33, 150, 243, 0.8) 100%
-          );
-          border-radius: 70px 0px 0 0;
-        }
+      .voting_content_vote_item_i_bottom {
+        position: absolute;
+        bottom: 96px;
+        right: 0px;
+        padding-left: 10px;
+        font-size: 16px;
+        color: #ffffff;
+        letter-spacing: 0;
+        text-align: right;
+        background-image: linear-gradient(
+          45deg,
+          #45c7fa 0%,
+          rgba(33, 150, 243, 0.8) 100%
+        );
+        border-radius: 70px 0px 0 0;
       }
     }
   }
