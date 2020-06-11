@@ -42,12 +42,14 @@ export default {
     return {
       listTitle: {},
       tableId: '',
+      type: '',
       userIndex: '',
       vote: true,
       url: '',
+      urlList: '',
       listData: [],
       formData: {},
-      openId: '',
+      openid: '',
       orderFieldList: ['voteId', 'voteOption', 'communityId', 'imgUrl']
     }
   },
@@ -57,14 +59,16 @@ export default {
 
     this.userIndex = this.$route.query.userIndex
     this.tableId = this.$route.query.tableId
-    this.openId = this.$route.query.openId
+    this.type = this.$route.query.type
+    this.openid = this.$route.query.openid
     this.url = '/api/v4/forms/' + this.tableId + '/responses'
+    this.urlList = '/api/v4/tags/' + this.type + '/taggable_forms'
 
     let infoData = {}
-    infoData.openid = this.openId
+    infoData.openid = this.openid
     infoData.tableId = this.tableId
 
-    api.getVoteListAPI().then(res => {
+    api.getVoteListAPI(this.urlList).then(res => {
       this.listTitle = res.data[this.userIndex]
       let DataTime = this.listTitle.created_at
       let firstDataTime = DataTime.slice(0, 10)
@@ -140,7 +144,7 @@ export default {
       this.formData.voteId = item.voteId
       this.formData.voteOption = item.voteOption
       this.formData.tableId = this.tableId
-      this.formData.openid = this.openId
+      this.formData.openid = this.openid
     }
   }
 }
@@ -291,6 +295,7 @@ export default {
           display: -webkit-box;
           -webkit-line-clamp: 2; /* 行数*/
           -webkit-box-orient: vertical;
+          text-align: left;
         }
 
         .voting_content_vote_item_i_after {

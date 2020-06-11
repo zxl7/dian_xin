@@ -10,7 +10,7 @@ import http from '../unit/http'
 
 export default {
   postFeedBackListAPI (json) {
-    return http.post('http://192.168.11.73:8081/WP/event/search', json)
+    return http.post('http://192.168.11.73:20800/WP/event/search', json)
   },
 
   // 投票
@@ -31,8 +31,8 @@ export default {
     return http.get('/api/v4/tags/3/taggable_forms', '')
   },
   // 三级页面header
-  getVoteListAPI () {
-    return http.get('/api/v4/tags/2/taggable_forms', '')
+  getVoteListAPI (url) {
+    return http.get(url, '')
   },
   getVotingAPI (url) {
     return http.get(url)

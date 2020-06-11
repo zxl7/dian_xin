@@ -12,27 +12,27 @@
         <van-tab title="全部投票">
           <div :key="item.id" v-for="(item,index) in  listUnderway">
             <router-link
-              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openId:item.openId}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,type:2}}"
               class="vote_a"
             >
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
-                  <h3>{{toText(item.html_body)}}</h3>
+                  <h3>{{toText(item.description)}}</h3>
                   <p>
                     <span>{{item.DataTime}}</span>
                     <span class="underway">进行中</span>
                   </p>
                 </aside>
                 <aside class="vote_main_right">
-                  <img :src="item.cover" class="vote_main_right_img" />
+                  <img :src="toImg(item.description)" class="vote_main_right_img" />
                 </aside>
               </div>
             </router-link>
           </div>
           <div :key="item.id" v-for="(item,index) in listEnd">
             <router-link
-              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openId:item.openId}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,type:3}}"
               class="vote_a"
             >
               <div class="vote_main_center">
@@ -55,13 +55,13 @@
         <van-tab title="进行中">
           <div :key="item.id" v-for="(item,index) in  listUnderway">
             <router-link
-              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openId:item.openId}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,type:2}}"
               class="vote_a"
             >
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
-                  <h3>{{toText(item.html_body)}}</h3>
+                  <h3>{{toText(item.description)}}</h3>
                   <p>
                     <span>{{item.DataTime}}</span>
                     <span class="underway">进行中</span>
@@ -77,7 +77,7 @@
         <van-tab title="已结束">
           <div :key="item.id" v-for="(item,index) in listEnd">
             <router-link
-              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openId:item.openId}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,type:3}}"
               class="vote_a"
             >
               <div class="vote_main_center">
@@ -113,12 +113,11 @@ export default {
       immediate_check: false,
       loadNum: 1,
       active: 0,
-      openId: ''
+      openid: ''
     }
   },
   created () {
-    this.openId = this.$route.query.openId
-    console.log(this.openId)
+    this.openid = this.$route.query.openid
   },
   mounted () {
     api.getVoteListSuccessAPI().then(res => {
@@ -130,7 +129,7 @@ export default {
           let lastDataTime = DataTime.slice(11, 19)
           DataTime = firstDataTime + ' ' + lastDataTime
           this.listUnderway[i].DataTime = DataTime
-          this.listUnderway[i].openId = this.openId
+          this.listUnderway[i].openid = this.openid
         }
       }
     })
@@ -144,7 +143,7 @@ export default {
           DataTime = firstDataTime + ' ' + lastDataTime
 
           this.listEnd[i].DataTime = DataTime
-          this.listEnd[i].openId = this.openId
+          this.listEnd[i].openid = this.openid
         }
       }
     })
