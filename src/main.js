@@ -9,7 +9,6 @@ import './assets/icon/styleTwo.css'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import { List, Tab, Tabs, Toast } from 'vant'
-import 'lib-flexible'
 Vue.prototype.$axios = axios
 
 Vue.use(VueCookies)
