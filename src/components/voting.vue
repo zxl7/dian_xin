@@ -51,8 +51,6 @@ export default {
   },
 
   mounted () {
-    let dataList = []
-
     this.userIndex = this.$route.query.userIndex
     this.tableId = this.$route.query.tableId
     this.type = this.$route.query.type
@@ -72,28 +70,31 @@ export default {
       DataTime = firstDataTime + ' ' + lastDataTime
       this.listTitle.DataTime = DataTime
     })
+
+    let dataList = []
+
     api.getVotingAPI(this.url).then(res => {
-      // 数据结构解析
       let data = res.data
 
+      // 数据结构解析
       for (let i = 0; i < res.data.length; i++) {
-        let dataObj = {}
+        let objData = {}
         this.orderFieldList.forEach(element => {
           let value = data[i].mapped_values[element].exported_value[0]
-          dataObj[element] = value
-          dataObj.status = true
-          dataObj.voteCount = 0
+          objData[element] = value
+          objData.status = true
+          objData.voteCount = 0
         })
         // 图片地址解析
         for (let y = 0; y < res.data[i].entries.length; y++) {
           if (res.data[i].entries[y].attachment) {
             let str = res.data[i].entries[y].attachment.download_url
             let url = str.slice(0, str.indexOf('?'))
-            dataObj.img_url = url
+            objData.img_url = url
           }
         }
 
-        dataList.push(dataObj)
+        dataList.push(objData)
       }
       console.log(dataList)
 
@@ -217,7 +218,7 @@ export default {
       margin-bottom: 9px;
       box-sizing: border-box;
       position: relative;
-      width:  168px;
+      width: 168px;
       height: 262px;
       padding: 6px;
       background: #ffffff;
