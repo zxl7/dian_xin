@@ -155,14 +155,9 @@ export default {
       if (text) { return text.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ') }
     },
     toImg (text) {
-      console.log(text.indexOf('src="'))
       text = text.slice(text.indexOf('src="') + 5)
       text = text.slice(0, text.indexOf('"'))
       return text
-
-      // let pattern = /http.*(?=")/
-
-      // return (text.match(pattern))
     }
   }
 }
