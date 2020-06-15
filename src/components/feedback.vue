@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!-- <header class="tabnar-header">
-      <i @click="back" class="after"></i>
-      我的反馈
-    </header>-->
     <div class="banner">
       <div class="banner_title">
         <h1 class="banner_title_h1">我的反馈</h1>
@@ -63,16 +59,16 @@ export default {
     }
   },
   mounted () {
-    // let query = this.$route.query
-    // this.name = query.name
-    // this.phone = query.phone
+    let query = this.$route.query
+    this.name = window.name || query.name || ''
+    this.phone = window.phone || query.phone || ''
+
     let json = {
       'pageNum': this.loadNum,
       'pageSize': '30',
-      'name': window.name,
-      'callNumber': window.phone
+      'name': this.name,
+      'callNumber': this.phone
     }
-    // console.log(query)
 
     api.postFeedBackListAPI(json).then(res => {
       if (res.status === 200) { this.list = res.data.data.list }
@@ -96,7 +92,6 @@ export default {
           let newList = res.data.data.list
           this.list = [...oldList, ...newList]
           this.loading = false
-          console.log(res)
 
           if (!res.data) {
             this.loading = false
