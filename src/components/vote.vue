@@ -123,6 +123,8 @@ export default {
     api.getVoteListSuccessAPI().then(res => {
       if (res.status === 200) {
         this.listUnderway = res.data
+        console.log(res)
+
         for (let i = 0; i < this.listUnderway.length; i++) {
           let DataTime = this.listUnderway[i].created_at
           let firstDataTime = DataTime.slice(0, 10)
@@ -153,8 +155,14 @@ export default {
       if (text) { return text.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ') }
     },
     toImg (text) {
-      let pattern = /http.*(?=">)/
-      return (text.match(pattern))
+      console.log(text.indexOf('src="'))
+      text = text.slice(text.indexOf('src="') + 5)
+      text = text.slice(0, text.indexOf('"'))
+      return text
+
+      // let pattern = /http.*(?=")/
+
+      // return (text.match(pattern))
     }
   }
 }
