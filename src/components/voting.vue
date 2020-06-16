@@ -96,7 +96,7 @@ export default {
 
         dataList.push(objData)
       }
-      console.log(dataList)
+      // console.log(dataList)
 
       // 定义投票状态
       api.postVoteInfoAPI(infoData).then(res => {
@@ -115,8 +115,12 @@ export default {
       })
       this.listData = dataList
     })
+    if (this.type) {
+      this.vote = false
+    }
   },
   methods: {
+
     // 投票状态切换
     voting (item) {
       if (this.vote) {
@@ -132,7 +136,11 @@ export default {
           }
         })
       } else {
-        this.$toast.fail('已投票')
+        if (this.type === 3) {
+          this.$toast.fail('投票已结束')
+        } else {
+          this.$toast.fail('已投票')
+        }
       }
     },
     // 删除html标签
@@ -218,7 +226,7 @@ export default {
       margin-bottom: 9px;
       box-sizing: border-box;
       position: relative;
-      width: 168px;
+      width: 45vw;
       height: 262px;
       padding: 6px;
       background: #ffffff;
@@ -246,7 +254,8 @@ export default {
       }
 
       .voting_content_vote_item_img {
-        width: 156px;
+        width: 100%;
+        max-width: 156px;
         height: 156px;
       }
       .voting_content_vote_item_p {

@@ -60,8 +60,8 @@ export default {
   },
   mounted () {
     let query = this.$route.query
-    this.name = window.name || query.name || ''
-    this.phone = window.phone || query.phone || ''
+    this.name = query.name || window.name || ''
+    this.phone = query.phone || window.phone || ''
 
     let json = {
       'pageNum': this.loadNum,
@@ -71,7 +71,12 @@ export default {
     }
 
     api.postFeedBackListAPI(json).then(res => {
-      if (res.status === 200) { this.list = res.data.data.list }
+      if (res.status === 200) {
+        this.list = res.data.data.list
+        if (!this.list) {
+          this.$toast(res.data.resultDetail)
+        }
+      }
     })
   },
   methods: {

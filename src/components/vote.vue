@@ -123,7 +123,7 @@ export default {
     api.getVoteListSuccessAPI().then(res => {
       if (res.status === 200) {
         this.listUnderway = res.data
-        console.log(res)
+        // console.log(res)
 
         for (let i = 0; i < this.listUnderway.length; i++) {
           let DataTime = this.listUnderway[i].created_at
