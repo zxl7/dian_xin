@@ -14,11 +14,11 @@
 
       <div class="voting_content_vote">
         <div :key="item.id" class="voting_content_vote_item" v-for="item in listData">
-          <i class="voting_content_vote_item_i">{{item.voteId}}号</i>
+          <i class="voting_content_vote_item_i">{{item.id}}号</i>
           <i class="voting_content_vote_item_i_bottom">{{item.voteCount}}票</i>
 
           <img :src="item.img_url" class="voting_content_vote_item_img" />
-          <p class="voting_content_vote_item_p">{{item.voteOption}}</p>
+          <p class="voting_content_vote_item_p">{{item.name}}</p>
           <i
             :class="item.status? 'voting_content_vote_item_i_before':'voting_content_vote_item_i_after'"
             @click="voting(item)"
@@ -99,7 +99,7 @@ export default {
 
         dataList.push(objData)
       }
-      // console.log(dataList)
+      console.log(dataList)
 
       // 定义投票状态
       api.postVoteInfoAPI(infoData).then(res => {
