@@ -46,7 +46,8 @@ export default {
       listData: [],
       formData: {},
       openid: '',
-      orderFieldList: ['voteId', 'voteOption', 'communityId', 'imgUrl']
+      communityId: 0,
+      orderFieldList: ['name', 'id', 'img']
     }
   },
 
@@ -63,6 +64,8 @@ export default {
     infoData.tableId = this.tableId
 
     api.getVoteListAPI(this.urlList).then(res => {
+      // console.log(res)
+
       this.listTitle = res.data[this.userIndex]
       let DataTime = this.listTitle.created_at
       let firstDataTime = DataTime.slice(0, 10)
@@ -115,7 +118,7 @@ export default {
       })
       this.listData = dataList
     })
-    if (this.type) {
+    if (this.type === 3) {
       this.vote = false
     }
   },
