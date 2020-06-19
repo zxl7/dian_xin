@@ -99,7 +99,7 @@ export default {
 
         dataList.push(objData)
       }
-      console.log(dataList)
+      dataList.reverse()
 
       // 定义投票状态
       api.postVoteInfoAPI(infoData).then(res => {
