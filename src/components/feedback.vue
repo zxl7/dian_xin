@@ -8,13 +8,13 @@
       <img alt class="tickling_img" src="https://source2.softspirit.cn/wsq/hd_fb.jpg" />
     </div>
     <div class="tickling_main">
-      <van-list
+      <!-- <van-list
         :finished="finished"
         :immediate-check="immediate_check"
         @load="onLoad"
         finished-text="没有更多了"
         v-model="loading"
-      >
+      > -->
         <div :key="item.id" class="tickling_main_center" v-for="item in list">
           <aside class="tickling_main_left">
             <i class="icon-icon_baseline-feedback"></i>
@@ -38,7 +38,7 @@
             <p class="tickling_main_right_reply">{{item.dealSubjust}}</p>
           </aside>
         </div>
-      </van-list>
+      <!-- </van-list> -->
     </div>
   </div>
 </template>
