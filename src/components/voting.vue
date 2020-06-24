@@ -46,7 +46,6 @@ export default {
       listData: [],
       formData: {},
       openid: '',
-      communityId: 0,
       orderFieldList: ['name', 'id', 'img']
     }
   },
@@ -157,12 +156,11 @@ export default {
     },
     // 构建传输数据
     createFormData (item) {
-      this.formData.communityId = item.communityId
-      this.formData.tableName = item.tableName
-      this.formData.voteId = item.voteId
-      this.formData.voteOption = item.voteOption
-      this.formData.tableId = this.tableId
       this.formData.openid = this.openid
+      this.formData.tableName = item.tableName
+      this.formData.voteId = item.id
+      this.formData.voteOption = item.name
+      this.formData.tableId = this.tableId
     }
   }
 }
