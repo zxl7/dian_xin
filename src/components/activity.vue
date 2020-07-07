@@ -9,7 +9,7 @@
     </div>
     <div class="vote_main">
       <div :key="item.id" v-for="item in list">
-        <a :href="href + item.id" class="active_a">
+        <router-link :to="{ name:'pages', query: {pageId:item.id}}" class="active_a">
           <div class="vote_main_center">
             <aside class="vote_main_right">
               <img :src="item.cover" class="vote_main_right_img" />
@@ -22,7 +22,7 @@
               </p>
             </aside>
           </div>
-        </a>
+        </router-link>
       </div>
     </div>
   </div>
@@ -33,16 +33,11 @@ import api from '@/api/api'
 export default {
   data () {
     return {
-      list: [],
-      loadNum: 1,
-      href: 'http://wsq.cdyoue.com/namespaces/1/categories/8/pages/'
+      list: []
     }
   },
   mounted () {
-    let headers = {
-      Authorization: '4e4dd921c32c38e87c87a6cf7ef7b41847127080992f8a2f1daa9c69e0fc5375:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lc3BhY2VfaWQiOjF9.KfdM20pGpvdasQuWJBT8Ta6wlwQKS5vQnDxwJzAXKVY'
-    }
-    api.getActivityAPI(headers).then(res => {
+    api.getActivityAPI().then(res => {
       if (res.status === 200) {
         this.list = res.data
         for (let i = 0; i < this.list.length; i++) {
@@ -60,9 +55,6 @@ export default {
     ToText (HTML) {
       var input = HTML
       return input.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ')
-    },
-    back () {
-      this.$router.go(-1)
     }
   }
 }
