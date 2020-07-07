@@ -18,5 +18,15 @@ export default [
     path: '/dian_xin/activity',
     name: 'activity',
     component: () => import(/* webpackChunkName:'activity' */'@/components/activity')
+  },
+  {
+    path: '/dian_xin/activity/pages',
+    name: 'pages',
+    component: () => import(/* webpackChunkName:'pages' */'@/components/pages')
+  },
+  {
+    path: '/dian_xin/pages/comments',
+    name: 'comments',
+    component: () => import(/* webpackChunkName:'comments' */'@/components/comments')
   }
 ]
