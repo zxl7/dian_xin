@@ -9,26 +9,24 @@
     <div class="page-comments">
       <div class="page-comments-divider"></div>
       <div class="page-comments-header">
-        <span>评论</span>
-        <router-link :to="{name:'comments',query:{pageId:this.pageId}}">写短评</router-link>
+        <span v-if="!this.commentNum">评论</span>
+        <span v-else>评论（{{commentNum}}）</span>
+        <router-link :to="{name:'comments',query:{pageId:this.pageId,userId:this,userId}}">写短评</router-link>
       </div>
 
-      <div class="no-page-comments">
+      <div class="no-page-comments" v-show="showComments">
         <span>这篇文章还没有评论</span>
       </div>
 
-      <div class="page-comments-list">
-        <div class="page-comment-item">
+      <div class="page-comments-list" v-show="!showComments">
+        <div :key="item.id" class="page-comment-item" v-for="item in list">
           <div class="comment-author-header">
-            <img
-              alt="author-header"
-              src="http://thirdwx.qlogo.cn/mmopen/vi_32/jBy8W5IyGw9sBjQFQsB7bC7OgvIgwDUGicL4HLO2QT6O3wDDGFicxf9Wy4YAh3iasWB7HsNL2UBauU7DkpoCuggTA/64"
-            />
+            <img :src="item.headimgurl" alt="author-header" />
           </div>
           <div class="comment-details">
-            <div class="comment-author-name">郑薛林</div>
-            <div class="comment-body">增加一条评论</div>
-            <div class="comment-created_at">2020-07-07 14:23</div>
+            <div class="comment-author-name">{{item.author.name}}</div>
+            <div class="comment-body">{{item.body}}</div>
+            <div class="comment-created_at">{{item.created_at}}</div>
           </div>
         </div>
       </div>
@@ -42,16 +40,38 @@ import api from '@/api/api'
 export default {
   data () {
     return {
-      pageId: {
-        type: Number,
-        default: 0
-      },
-      dataObj: ''
+      pageId: 0,
+      dataObj: '',
+      userId: '',
+      list: [],
+      showComments: true,
+      commentNum: 0
 
     }
   },
   mounted () {
     this.pageId = this.$route.query.pageId
+    let keyword = ''
+    if (this.$route.query.phone) {
+      keyword = this.$route.query.phone
+    } else {
+      this.$toast.fail('用户未登录')
+    }
+
+    api.getUserAPI(keyword).then(res => {
+      this.userId = res.data[0].id
+      api.getCommentsAPI(this.userId, this.pageId).then(res => {
+        let len = res.data.length
+        if (len) {
+          this.commentNum = len
+          this.showComments = false
+        }
+        for (let i = 0; i < len; i++) {
+          res.data[i].headimgurl = res.data[i].author.headimgurl + '/64'
+        }
+        this.list = res.data
+      })
+    })
 
     api.getActivityAPI().then(res => {
       res.data.forEach(ele => {

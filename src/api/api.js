@@ -1,13 +1,6 @@
 import http from '../unit/http'
 // import cookie from 'js-cookie'
 
-// admin
-// export default {
-//   getMagnateOauthAPI () {
-//     return http.get('/magnate/oauth')
-//   }
-// }
-
 export default {
   // 工单查询
   postFeedBackListAPI (json) {
@@ -20,7 +13,6 @@ export default {
   },
   // 查询
   postVoteInfoAPI (data) {
-    // return http.post('http://wsq.softspirit.cn/mobile/wsq/vote/info', data)
     return http.post('/mobile/wsq/vote/info', data)
   },
 
@@ -43,6 +35,21 @@ export default {
   // 活动征集
   getActivityAPI () {
     return http.get('/api/v4/categories/8/pages', '')
+  },
+
+  // 用户信息
+  getUserAPI (data) {
+    return http.get('/api/v4/users/query?keyword=' + data)
+  },
+
+  // 新建评论
+  postCommentsAPI (data) {
+    return http.post('/api/v4/comments', data)
+  },
+
+  // 查询评论
+  getCommentsAPI (userId, pageId) {
+    return http.get('/api/v4/comments?user_id=' + userId + ' &cms_page_id=' + pageId)
   }
 
 }

@@ -21,15 +21,37 @@
 </template>
 
 <script>
+import api from '@/api/api'
+
 export default {
   data () {
     return {
       message: ''
     }
   },
+  mounted () {
+    this.pageId = this.$route.query.pageId
+    this.userId = this.$route.query.userId
+  },
   methods: {
     commentSend () {
-      console.log(this.message)
+      let data = {
+        'comment': {
+          'body': this.message
+        },
+        'user_id': this.userId,
+        'cms_page_id': this.pageId
+      }
+
+      api.postCommentsAPI(data).then(res => {
+        if (res.status === 200) {
+          this.$toast.success('评论成功')
+          setTimeout(() => {
+            // 延迟跳转
+            this.$router.go(-1)
+          }, 1500)
+        }
+      })
     },
     goBack () {
       this.$router.go(-1)

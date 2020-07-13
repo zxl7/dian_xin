@@ -46,10 +46,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     disableHostCheck: true,
     historyApiFallback: true,
     proxy: {
-      // '/WP': {
-      //   target: 'http://192.168.11.73:8081/',
-      //   changeOrigin: true,
-      // },
       '/api': {
         target: 'http://wsq.cdyoue.com',
         changeOrigin: true,
