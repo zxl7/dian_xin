@@ -11,7 +11,16 @@
       <div class="page-comments-header">
         <span v-if="!this.commentNum">评论</span>
         <span v-else>评论（{{commentNum}}）</span>
-        <router-link :to="{name:'comments',query:{pageId:this.pageId,userId:this,userId}}">写短评</router-link>
+        <a @click="link()">写短评</a>
+        <van-popup
+          :style="{ height: '30%',width:'70%' }"
+          close-icon="close"
+          closeable
+          v-model="show"
+        >
+          <p class="popup-title">未登录，是否登录 ？</p>
+          <a class="popup-buttom" href="http://wsq.cdyoue.com/mobile/wsq/login">去登录</a>
+        </van-popup>
       </div>
 
       <div class="no-page-comments" v-show="showComments">
@@ -45,17 +54,16 @@ export default {
       userId: '',
       list: [],
       showComments: true,
-      commentNum: 0
-
+      commentNum: 0,
+      show: false
     }
   },
   mounted () {
     this.pageId = this.$route.query.pageId
     let keyword = ''
+
     if (this.$route.query.phone) {
       keyword = this.$route.query.phone
-    } else {
-      this.$toast.fail('用户未登录')
     }
 
     api.getUserAPI(keyword).then(res => {
@@ -86,6 +94,16 @@ export default {
         }
       })
     })
+  },
+  methods: {
+    link () {
+      if (this.$route.query.phone) {
+        this.$router.push({ name: 'comments', query: { pageId: this.pageId, userId: this.userId } })
+      } else {
+        this.show = true
+      }
+    }
+
   }
 }
 </script>
@@ -156,6 +174,24 @@ export default {
     a {
       font-size: 14px;
       color: #fd7d58;
+    }
+    .popup-title {
+      display: flex;
+      justify-content: center;
+      margin-top: 15%;
+    }
+
+    .popup-buttom {
+      width: 70%;
+      border: 1px solid #4caf50;
+      padding: 10px;
+      margin: 20% auto 0px;
+      border-radius: 4px;
+      text-align: center;
+      background: #4caf50;
+      color: #fff;
+      font-size: 16px;
+      display: block;
     }
   }
   .no-page-comments {

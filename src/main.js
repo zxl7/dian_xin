@@ -8,7 +8,7 @@ import './assets/icon/style.css'
 import './assets/icon/styleTwo.css'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
-import { List, Tab, Tabs, Toast, Loading } from 'vant'
+import { List, Tab, Tabs, Toast, Loading, Popup } from 'vant'
 
 Vue.prototype.$axios = axios
 
@@ -18,6 +18,7 @@ Vue.use(List)
 Vue.use(Toast)
 Vue.use(Tab)
 Vue.use(Loading)
+Vue.use(Popup)
 Vue.use(Tabs)
 
 Vue.config.productionTip = false
