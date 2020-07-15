@@ -100,7 +100,7 @@ export default {
       if (this.$route.query.phone) {
         this.$router.push({ name: 'comments', query: { pageId: this.pageId, userId: this.userId } })
       } else {
-        this.show = true
+        this.show = !this.show
       }
     }
 
@@ -116,7 +116,7 @@ export default {
 }
 .page-header {
   text-align: left;
-  font-size: 16px;
+  font-size: 18px;
   border-bottom: 1px solid #e9e9e9;
 
   .page-title {
@@ -126,7 +126,7 @@ export default {
   }
 
   .page-created_at {
-    font-size: 13px;
+    font-size: 16px;
     color: #bcbcbc;
   }
 }
@@ -135,7 +135,7 @@ export default {
 }
 
 .page-content {
-  font-size: 14px;
+  font-size: 16px;
   font-family: arial, sans-serif;
   color: #333;
   outline: none;
@@ -160,7 +160,7 @@ export default {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    font-size: 15px;
+    font-size: 18px;
     flex-direction: row;
     align-items: center;
     text-align: left;
@@ -172,7 +172,7 @@ export default {
     }
 
     a {
-      font-size: 14px;
+      font-size: 18px;
       color: #fd7d58;
     }
     .popup-title {
@@ -195,10 +195,10 @@ export default {
     }
   }
   .no-page-comments {
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
     color: #888888;
-    padding: 10px 0;
+    padding: 10px 0px 100px;
   }
 }
 
@@ -212,8 +212,8 @@ export default {
 
   .comment-author-header {
     margin-right: 8px;
-    width: 33px;
-    height: 33px;
+    width: 3rem;
+    height: 3rem;
 
     img {
       width: 100%;
@@ -226,19 +226,19 @@ export default {
     flex-grow: 1;
     width: 0.5rem;
     .comment-author-name {
-      font-size: 13px;
+      font-size: 1.25rem;
       color: #888;
       line-height: 1.5em;
       position: relative;
     }
     .comment-body {
-      font-size: 14px;
+      font-size: 16px;
       color: #615f6c;
       line-height: 1.5em;
       padding: 4px 0;
     }
     .comment-created_at {
-      font-size: 12px;
+      font-size: 16px;
       color: #bcbcbc;
     }
   }

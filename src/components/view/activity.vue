@@ -64,7 +64,7 @@ export default {
 .tabnar-header {
   text-align: center;
   position: relative;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #222;
   height: 50px;
@@ -102,7 +102,7 @@ export default {
     }
     .banner_title_p {
       color: #de7c6d;
-      font-size: 13px;
+      font-size: 14px;
     }
   }
 }
@@ -128,7 +128,7 @@ export default {
       margin-left: 20px;
       h2 {
         text-align: left;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 500;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -141,7 +141,7 @@ export default {
         text-align: left;
         color: #95a4b3;
         font-weight: 400;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 18px;
         letter-spacing: 1.5px;
         word-break: break-word;
@@ -162,6 +162,7 @@ export default {
         span {
           padding: 2px 8px;
           border-radius: 12px;
+          font-size: 14px;
           background: #f4f4f8;
         }
         .underway {

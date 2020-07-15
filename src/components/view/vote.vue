@@ -167,7 +167,7 @@ export default {
 .tabnar-header {
   text-align: center;
   position: relative;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #222;
   height: 50px;
@@ -230,6 +230,7 @@ export default {
     }
     .van-tab__text {
       display: inline-block;
+      font-size: 16px;
     }
     .van-tab {
       border: none;
@@ -238,6 +239,7 @@ export default {
     }
     .van-tab.van-tab--active {
       color: white;
+      font-size: 1rem;
       background: #2196f3;
     }
   }
@@ -250,7 +252,7 @@ export default {
       width: 66%;
       h2 {
         text-align: left;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 500;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -263,7 +265,7 @@ export default {
         text-align: left;
         color: #95a4b3;
         font-weight: 400;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 18px;
         letter-spacing: 1.5px;
         word-break: break-word;
@@ -285,14 +287,17 @@ export default {
           padding: 2px 8px;
           border-radius: 12px;
           background: #f4f4f8;
+          font-size: 14px;
         }
         .underway {
           color: #2196f3;
+          font-size: 14px;
           background: #e8f4fd;
         }
 
         .end {
           color: #fd615c;
+          font-size: 14px;
           background: #ffedec;
         }
       }
