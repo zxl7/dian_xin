@@ -39,7 +39,7 @@ export default {
   mounted () {
     api.getActivityAPI().then(res => {
       if (res.status === 200) {
-        this.list = res.data
+        this.list = res.data.reverse()
         for (let i = 0; i < this.list.length; i++) {
           let DataTime = this.list[i].created_at
           let firstDataTime = DataTime.slice(0, 10)
