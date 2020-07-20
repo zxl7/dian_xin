@@ -12,7 +12,7 @@
         <van-tab title="全部投票">
           <div :key="item.id" v-for="(item,index) in  listUnderway">
             <router-link
-              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,type:2}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,mobile:item.mobile,type:2}}"
               class="vote_a"
             >
               <div class="vote_main_center">
@@ -32,7 +32,7 @@
           </div>
           <div :key="item.id" v-for="(item,index) in listEnd">
             <router-link
-              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,type:3}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,mobile:item.mobile,type:3}}"
               class="vote_a"
             >
               <div class="vote_main_center">
@@ -55,7 +55,7 @@
         <van-tab title="进行中">
           <div :key="item.id" v-for="(item,index) in  listUnderway">
             <router-link
-              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,type:2}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,mobile:item.mobile,type:2}}"
               class="vote_a"
             >
               <div class="vote_main_center">
@@ -77,7 +77,7 @@
         <van-tab title="已结束">
           <div :key="item.id" v-for="(item,index) in listEnd">
             <router-link
-              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,type:3}}"
+              :to="{name:'voting',query:{tableId:item.id,userIndex:index,openid:item.openid,mobile:item.mobile,type:3}}"
               class="vote_a"
             >
               <div class="vote_main_center">
