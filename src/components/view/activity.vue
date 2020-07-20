@@ -9,7 +9,7 @@
     </div>
     <div class="vote_main">
       <div :key="item.id" v-for="item in list">
-        <router-link :to="{ name:'pages', query: {pageId:item.id}}" class="active_a">
+        <router-link :to="{ name:'pages', query: {pageId:item.id,mobile:item.mobile}}" class="active_a">
           <div class="vote_main_center">
             <aside class="vote_main_right">
               <img :src="item.cover" class="vote_main_right_img" />
@@ -33,8 +33,12 @@ import api from '@/api/api'
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      mobile: ''
     }
+  },
+  created () {
+    this.mobile = this.$route.query.mobile
   },
   mounted () {
     api.getActivityAPI().then(res => {
@@ -47,6 +51,7 @@ export default {
           DataTime = firstDataTime + ' ' + lastDataTime
 
           this.list[i].DataTime = DataTime
+          this.list[i].mobile = this.mobile
         }
       }
     })

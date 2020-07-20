@@ -19,7 +19,7 @@
           v-model="show"
         >
           <p class="popup-title">未登录，是否登录 ？</p>
-          <a class="popup-buttom" href="http://wsq.cdyoue.com/mobile/wsq/login">去登录</a>
+          <a class="popup-buttom" href="http://wsq.gxzzzx.cn/mobile/wsq/login">去登录</a>
         </van-popup>
       </div>
 
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     link () {
-      if (this.$route.query.phone) {
+      if (this.$route.query.mobile) {
         this.$router.push({ name: 'comments', query: { pageId: this.pageId, userId: this.userId } })
       } else {
         this.show = !this.show

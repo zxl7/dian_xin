@@ -113,11 +113,13 @@ export default {
       immediate_check: false,
       loadNum: 1,
       active: 0,
-      openid: ''
+      openid: '',
+      mobile: ''
     }
   },
   created () {
     this.openid = this.$route.query.openid
+    this.mobile = this.$route.query.mobile
   },
   mounted () {
     api.getVoteListSuccessAPI().then(res => {
@@ -132,6 +134,7 @@ export default {
           DataTime = firstDataTime + ' ' + lastDataTime
           this.listUnderway[i].DataTime = DataTime
           this.listUnderway[i].openid = this.openid
+          this.listUnderway[i].mobile = this.mobile
         }
       }
     })

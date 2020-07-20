@@ -29,7 +29,7 @@
     </aside>
     <van-popup :style="{ height: '30%',width:'70%' }" close-icon="close" closeable v-model="show">
       <p class="popup-title">未登录，是否登录 ？</p>
-      <a class="popup-buttom" href="http://wsq.cdyoue.com/mobile/wsq/login">去登录</a>
+      <a class="popup-buttom" href="http://wsq.gxzzzx.cn/mobile/wsq/login">去登录</a>
     </van-popup>
   </div>
 </template>
@@ -51,6 +51,7 @@ export default {
       listData: [],
       formData: {},
       openid: '',
+      mobile: '',
       orderFieldList: ['name', 'id', 'img']
     }
   },
@@ -60,6 +61,7 @@ export default {
     this.tableId = this.$route.query.tableId
     this.type = this.$route.query.type
     this.openid = this.$route.query.openid
+    this.mobile = this.$route.query.mobile
     this.url = '/api/v4/forms/' + this.tableId + '/responses'
     this.urlList = '/api/v4/tags/' + this.type + '/taggable_forms'
 
@@ -127,10 +129,9 @@ export default {
     }
   },
   methods: {
-
     // 投票状态切换
     voting (item) {
-      if (!this.openid) {
+      if (!this.mobile) {
         this.show = !this.show
       } else {
         if (this.vote) {
