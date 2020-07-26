@@ -28,19 +28,20 @@
       </div>
     </aside>
     <van-popup
-      :style="{ height: '30%',width:'70%' }"
+      :style="{ height: '200px',width:'70%' }"
       round
       close-icon="none"
       closeable
       v-model="show"
-      class="popup"
     >
-      <h1 class="popup_h1">提示</h1>
-      <p class="popup_title">需要实名认证才能继续，是否前往登录？</p>
-      <p class="popup_botton">
-        <span class="noLogin" @click="show=false">取消</span>
-        <a class="goLogin" href="http://wsq.gxzzzx.cn/mobile/wsq/login">确定</a>
-      </p>
+      <div class="popup">
+        <h1 class="popup_h1">提示</h1>
+        <p class="popup_title">需要实名认证才能继续，是否前往登录？</p>
+        <p class="popup_botton">
+          <span class="noLogin" @click="show=false">取消</span>
+          <a class="goLogin" href="http://wsq.gxzzzx.cn/mobile/wsq/login">确定</a>
+        </p>
+      </div>
     </van-popup>
   </div>
 </template>
@@ -350,10 +351,10 @@ export default {
 }
 
 .popup {
-  padding: 2.6667vw;
+  padding: 20px;
 }
 .popup_h1 {
-  margin-top: 15%;
+  margin-top: 20px;
   text-align: left;
 }
 .popup_title {
@@ -363,7 +364,7 @@ export default {
 }
 
 .popup_botton {
-  margin-top: 20%;
+  margin-top: 10%;
   display: flex;
   justify-content: flex-end;
   margin-right: 10%;

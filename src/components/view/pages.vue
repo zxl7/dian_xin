@@ -12,15 +12,6 @@
         <span v-if="!this.commentNum">评论</span>
         <span v-else>评论（{{commentNum}}）</span>
         <a @click="link()">写短评</a>
-        <van-popup
-          :style="{ height: '30%',width:'80%' }"
-          close-icon="close"
-          closeable
-          v-model="show"
-        >
-          <p class="popup-title">未登录，是否登录 ？</p>
-          <a class="popup-buttom" href="http://wsq.gxzzzx.cn/mobile/wsq/login">去登录</a>
-        </van-popup>
       </div>
 
       <div class="no-page-comments" v-show="showComments">
@@ -40,6 +31,22 @@
         </div>
       </div>
     </div>
+    <van-popup
+      :style="{ height: '200px',width:'70%' }"
+      round
+      close-icon="none"
+      closeable
+      v-model="show"
+    >
+      <div class="popup">
+        <h1 class="popup_h1">提示</h1>
+        <p class="popup_title">需要实名认证才能继续，是否前往登录？</p>
+        <div class="popup_botton">
+          <div class="noLogin" @click="show=false">取消</div>
+          <a class="goLogin" href="http://wsq.gxzzzx.cn/mobile/wsq/login">确定</a>
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -245,6 +252,35 @@ export default {
       font-size: 16px;
       color: #bcbcbc;
     }
+  }
+}
+.popup {
+  padding: 20px;
+}
+.popup_h1 {
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: left;
+}
+.popup_title {
+  margin-top: 5%;
+  display: flex;
+  font-size: 14px;
+}
+
+.popup_botton {
+  margin-top: 10%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10%;
+  .noLogin {
+    font-size: 14px;
+    margin-right: 10%;
+  }
+  .goLogin {
+    text-align: center;
+    font-size: 14px;
+    color: #223469;
   }
 }
 </style>
