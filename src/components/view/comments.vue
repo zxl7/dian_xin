@@ -21,44 +21,43 @@
 </template>
 
 <script>
-import api from '@/api/api'
+import api from "@/api/api";
 
 export default {
-  data () {
+  data() {
     return {
-      message: ''
-    }
+      message: "",
+    };
   },
-  mounted () {
-    this.pageId = this.$route.query.pageId
-    this.userId = this.$route.query.userId
+  mounted() {
+    this.pageId = this.$route.query.pageId;
+    this.userId = this.$route.query.userId;
   },
   methods: {
-    commentSend () {
+    commentSend() {
       let data = {
-        'comment': {
-          'body': this.message
+        comment: {
+          body: this.message,
         },
-        'user_id': this.userId,
-        'cms_page_id': this.pageId
-      }
+        user_id: this.userId,
+        cms_page_id: this.pageId,
+      };
 
-      api.postCommentsAPI(data).then(res => {
+      api.postCommentsAPI(data).then((res) => {
         if (res.status === 200) {
-          this.$toast.success('评论成功')
+          this.$toast.success("评论成功,积分+10");
           setTimeout(() => {
             // 延迟跳转
-            this.$router.go(-1)
-          }, 1500)
+            this.$router.go(-1);
+          }, 1500);
         }
-      })
+      });
     },
-    goBack () {
-      this.$router.go(-1)
-    }
-  }
-
-}
+    goBack() {
+      this.$router.go(-1);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

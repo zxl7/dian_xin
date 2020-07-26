@@ -115,26 +115,27 @@ export default {
             objData.img_url = url;
           }
         }
-
         dataList.push(objData);
       }
       dataList.reverse();
 
       // 定义投票状态
-      api.postVoteInfoAPI(infoData).then((res) => {
-        if (res.data.errcode === 0) {
-          for (let i = 0; i < dataList.length; i++) {
-            if (res.data.data.options[i + 1]) {
-              dataList[i].voteCount = res.data.data.options[i + 1];
+      if (this.mobile) {
+        api.postVoteInfoAPI(infoData).then((res) => {
+          if (res.data.errcode === 0) {
+            for (let i = 0; i < dataList.length; i++) {
+              if (res.data.data.options[i + 1]) {
+                dataList[i].voteCount = res.data.data.options[i + 1];
+              }
+            }
+            if (res.data.data.voteId) {
+              this.vote = false;
+              let voteId = res.data.data.voteId;
+              dataList[voteId - 1].status = false;
             }
           }
-          if (res.data.data.voteId) {
-            this.vote = false;
-            let voteId = res.data.data.voteId;
-            dataList[voteId - 1].status = false;
-          }
-        }
-      });
+        });
+      }
       this.listData = dataList;
     });
     if (this.type === 3) {
@@ -156,7 +157,7 @@ export default {
             if (res.data.errcode === 1) {
               this.$toast.fail("不能重复投票");
             } else {
-              this.$toast.success("投票成功");
+              this.$toast.success("投票成功,积分 +10 ");
             }
           });
         } else {

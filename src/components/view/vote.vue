@@ -122,8 +122,6 @@ export default {
     this.mobile = this.$route.query.mobile;
   },
   mounted() {
-    document.title = "社区投票";
-
     api.getVoteListSuccessAPI().then((res) => {
       if (res.status === 200) {
         this.listUnderway = res.data;
@@ -137,6 +135,7 @@ export default {
           this.listUnderway[i].mobile = this.mobile;
         }
       }
+      window.desc = this.listUnderway[0].title;
     });
     api.getVoteListEndAPI().then((res) => {
       if (res.status === 200) {
@@ -146,13 +145,12 @@ export default {
           let firstDataTime = DataTime.slice(0, 10);
           let lastDataTime = DataTime.slice(11, 19);
           DataTime = firstDataTime + " " + lastDataTime;
-
           this.listEnd[i].DataTime = DataTime;
           this.listEnd[i].openid = this.openid;
-          window.desc = this.listUnderway[0].title;
         }
       }
     });
+    document.title = "社区投票";
   },
   methods: {
     toText(text) {
