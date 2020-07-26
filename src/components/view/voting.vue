@@ -27,153 +27,167 @@
         </div>
       </div>
     </aside>
-    <van-popup :style="{ height: '30%',width:'70%' }" close-icon="close" closeable v-model="show">
-      <p class="popup-title">未登录，是否登录 ？</p>
-      <a class="popup-buttom" href="http://wsq.gxzzzx.cn/mobile/wsq/login">去登录</a>
+    <van-popup
+      :style="{ height: '30%',width:'70%' }"
+      round
+      close-icon="none"
+      closeable
+      v-model="show"
+      class="popup"
+    >
+      <h1 class="popup_h1">提示</h1>
+      <p class="popup_title">需要实名认证才能继续，是否前往登录？</p>
+      <p class="popup_botton">
+        <span class="noLogin" @click="show=false">取消</span>
+        <a class="goLogin" href="http://wsq.gxzzzx.cn/mobile/wsq/login">确定</a>
+      </p>
     </van-popup>
   </div>
 </template>
 
 <script>
-import api from '@/api/api'
+import api from "@/api/api";
 
 export default {
-  data () {
+  data() {
     return {
       show: false,
       listTitle: {},
-      tableId: '',
-      type: '',
-      userIndex: '',
+      tableId: "",
+      type: "",
+      userIndex: "",
       vote: true,
-      url: '',
-      urlList: '',
+      url: "",
+      urlList: "",
       listData: [],
       formData: {},
-      openid: '',
-      mobile: '',
-      orderFieldList: ['name', 'id', 'img']
-    }
+      openid: "",
+      mobile: "",
+      orderFieldList: ["name", "id", "img"],
+    };
   },
 
-  mounted () {
-    this.userIndex = this.$route.query.userIndex
-    this.tableId = this.$route.query.tableId
-    this.type = this.$route.query.type
-    this.openid = this.$route.query.openid
-    this.mobile = this.$route.query.mobile
-    this.url = '/api/v4/forms/' + this.tableId + '/responses'
-    this.urlList = '/api/v4/tags/' + this.type + '/taggable_forms'
+  mounted() {
+    this.userIndex = this.$route.query.userIndex;
+    this.tableId = this.$route.query.tableId;
+    this.type = this.$route.query.type;
+    this.openid = this.$route.query.openid;
+    this.mobile = this.$route.query.mobile;
+    this.url = "/api/v4/forms/" + this.tableId + "/responses";
+    this.urlList = "/api/v4/tags/" + this.type + "/taggable_forms";
 
-    let infoData = {}
-    infoData.openid = this.openid
-    infoData.tableId = this.tableId
+    let infoData = {};
+    infoData.openid = this.openid;
+    infoData.tableId = this.tableId;
 
-    api.getVoteListAPI(this.urlList).then(res => {
-      // console.log(res)
+    api.getVoteListAPI(this.urlList).then((res) => {
+      this.listTitle = res.data[this.userIndex];
+      let DataTime = this.listTitle.created_at;
+      let firstDataTime = DataTime.slice(0, 10);
+      let lastDataTime = DataTime.slice(11, 19);
+      DataTime = firstDataTime + " " + lastDataTime;
+      this.listTitle.DataTime = DataTime;
 
-      this.listTitle = res.data[this.userIndex]
-      let DataTime = this.listTitle.created_at
-      let firstDataTime = DataTime.slice(0, 10)
-      let lastDataTime = DataTime.slice(11, 19)
-      DataTime = firstDataTime + ' ' + lastDataTime
-      this.listTitle.DataTime = DataTime
-    })
+      document.title = this.listTitle.title;
+      window.desc = this.listTitle.title;
+    });
 
-    let dataList = []
+    let dataList = [];
 
-    api.getVotingAPI(this.url).then(res => {
-      let data = res.data
+    api.getVotingAPI(this.url).then((res) => {
+      let data = res.data;
 
       // 数据结构解析
       for (let i = 0; i < res.data.length; i++) {
-        let objData = {}
-        this.orderFieldList.forEach(element => {
-          let value = data[i].mapped_values[element].exported_value[0]
-          objData[element] = value
-          objData.status = true
-          objData.voteCount = 0
-        })
+        let objData = {};
+        this.orderFieldList.forEach((element) => {
+          let value = data[i].mapped_values[element].exported_value[0];
+          objData[element] = value;
+          objData.status = true;
+          objData.voteCount = 0;
+        });
         // 图片地址解析
         for (let y = 0; y < res.data[i].entries.length; y++) {
           if (res.data[i].entries[y].attachment) {
-            let str = res.data[i].entries[y].attachment.download_url
-            let url = str.slice(0, str.indexOf('?'))
-            objData.img_url = url
+            let str = res.data[i].entries[y].attachment.download_url;
+            let url = str.slice(0, str.indexOf("?"));
+            objData.img_url = url;
           }
         }
 
-        dataList.push(objData)
+        dataList.push(objData);
       }
-      dataList.reverse()
+      dataList.reverse();
 
       // 定义投票状态
-      api.postVoteInfoAPI(infoData).then(res => {
+      api.postVoteInfoAPI(infoData).then((res) => {
         if (res.data.errcode === 0) {
           for (let i = 0; i < dataList.length; i++) {
             if (res.data.data.options[i + 1]) {
-              dataList[i].voteCount = res.data.data.options[i + 1]
+              dataList[i].voteCount = res.data.data.options[i + 1];
             }
           }
           if (res.data.data.voteId) {
-            this.vote = false
-            let voteId = res.data.data.voteId
-            dataList[voteId - 1].status = false
+            this.vote = false;
+            let voteId = res.data.data.voteId;
+            dataList[voteId - 1].status = false;
           }
         }
-      })
-      this.listData = dataList
-    })
+      });
+      this.listData = dataList;
+    });
     if (this.type === 3) {
-      this.vote = false
+      this.vote = false;
     }
   },
   methods: {
     // 投票状态切换
-    voting (item) {
+    voting(item) {
       if (!this.mobile) {
-        this.show = !this.show
+        this.show = !this.show;
       } else {
         if (this.vote) {
-          item.voteCount++
-          item.status = false
-          this.vote = !this.vote
-          this.createFormData(item)
-          api.postVoteCreateAPI(this.formData).then(res => {
+          item.voteCount++;
+          item.status = false;
+          this.vote = !this.vote;
+          this.createFormData(item);
+          api.postVoteCreateAPI(this.formData).then((res) => {
             if (res.data.errcode === 1) {
-              this.$toast.fail('不能重复投票')
+              this.$toast.fail("不能重复投票");
             } else {
-              this.$toast.success('投票成功')
+              this.$toast.success("投票成功");
             }
-          })
+          });
         } else {
           if (this.type === 3) {
-            this.$toast.fail('投票已结束')
+            this.$toast.fail("投票已结束");
           } else {
-            this.$toast.fail('已投票')
+            this.$toast.fail("已投票");
           }
         }
       }
     },
     // 删除html标签
-    toText (text) {
-      if (text) { return text.replace(/<[^>]+>/ig, ' ') }
-    },
-    toImg (text) {
+    toText(text) {
       if (text) {
-        return (text.slice(text.indexOf('（') + 1, text.indexOf('）')))
+        return text.replace(/<[^>]+>/gi, " ");
+      }
+    },
+    toImg(text) {
+      if (text) {
+        return text.slice(text.indexOf("（") + 1, text.indexOf("）"));
       }
     },
     // 构建传输数据
-    createFormData (item) {
-      this.formData.openid = this.openid
-      this.formData.tableName = item.tableName
-      this.formData.voteId = item.id
-      this.formData.voteOption = item.name
-      this.formData.tableId = this.tableId
-    }
-  }
-}
+    createFormData(item) {
+      this.formData.openid = this.openid;
+      this.formData.tableName = item.tableName;
+      this.formData.voteId = item.id;
+      this.formData.voteOption = item.name;
+      this.formData.tableId = this.tableId;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -207,7 +221,7 @@ export default {
   min-height: 600px;
   padding-bottom: 100px;
   text-align: center;
-  background: url('~@/assets/img/bg.png');
+  background: url("~@/assets/img/bg.png");
   background-size: cover;
 
   .voting_p {
@@ -334,23 +348,33 @@ export default {
     }
   }
 }
-.popup-title {
+
+.popup {
+  padding: 2.6667vw;
+}
+.popup_h1 {
+  margin-top: 15%;
+  text-align: left;
+}
+.popup_title {
+  margin-top: 5%;
   display: flex;
   font-size: 14px;
-  justify-content: center;
-  margin-top: 15%;
 }
 
-.popup-buttom {
-  width: 70%;
-  border: 1px solid #4caf50;
-  padding: 10px;
-  margin: 20% auto 0px;
-  border-radius: 4px;
-  text-align: center;
-  background: #4caf50;
-  color: #fff;
-  font-size: 16px;
-  display: block;
+.popup_botton {
+  margin-top: 20%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10%;
+  .noLogin {
+    font-size: 14px;
+    margin-right: 10%;
+  }
+  .goLogin {
+    text-align: center;
+    font-size: 14px;
+    color: #223469;
+  }
 }
 </style>

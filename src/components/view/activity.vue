@@ -9,7 +9,10 @@
     </div>
     <div class="vote_main">
       <div :key="item.id" v-for="item in list">
-        <router-link :to="{ name:'pages', query: {pageId:item.id,mobile:item.mobile}}" class="active_a">
+        <router-link
+          :to="{ name:'pages', query: {pageId:item.id,mobile:item.mobile}}"
+          class="active_a"
+        >
           <div class="vote_main_center">
             <aside class="vote_main_right">
               <img :src="item.cover" class="vote_main_right_img" />
@@ -29,40 +32,47 @@
 </template>
 
 <script>
-import api from '@/api/api'
+import api from "@/api/api";
 export default {
-  data () {
+  data() {
     return {
       list: [],
-      mobile: ''
-    }
+      mobile: "",
+    };
   },
-  created () {
-    this.mobile = this.$route.query.mobile
+  created() {
+    document.title = "活动征集";
+    this.mobile = this.$route.query.mobile;
   },
-  mounted () {
-    api.getActivityAPI().then(res => {
+  mounted() {
+    api.getActivityAPI().then((res) => {
       if (res.status === 200) {
-        this.list = res.data.reverse()
+        this.list = res.data.reverse();
         for (let i = 0; i < this.list.length; i++) {
-          let DataTime = this.list[i].created_at
-          let firstDataTime = DataTime.slice(0, 10)
-          let lastDataTime = DataTime.slice(11, 19)
-          DataTime = firstDataTime + ' ' + lastDataTime
+          let DataTime = this.list[i].created_at;
+          let firstDataTime = DataTime.slice(0, 10);
+          let lastDataTime = DataTime.slice(11, 19);
+          DataTime = firstDataTime + " " + lastDataTime;
 
-          this.list[i].DataTime = DataTime
-          this.list[i].mobile = this.mobile
+          this.list[i].DataTime = DataTime;
+          this.list[i].mobile = this.mobile;
+          window.desc = this.list[0].title;
         }
       }
-    })
+    });
   },
   methods: {
-    ToText (HTML) {
-      var input = HTML
-      return input.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ')
-    }
-  }
-}
+    ToText(HTML) {
+      var input = HTML;
+      return input
+        .replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, "")
+        .replace(/<[^>]+?>/g, "")
+        .replace(/\s+/g, " ")
+        .replace(/ /g, " ")
+        .replace(/>/g, " ");
+    },
+  },
+};
 </script>
 
 <style lang="scss"  scoped>
@@ -85,7 +95,7 @@ export default {
   border-bottom: 5px solid transparent;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  content: '';
+  content: "";
   display: inline-block;
   transform: rotate(90deg);
   position: relative;

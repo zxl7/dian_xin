@@ -13,7 +13,7 @@
         <span v-else>评论（{{commentNum}}）</span>
         <a @click="link()">写短评</a>
         <van-popup
-          :style="{ height: '30%',width:'70%' }"
+          :style="{ height: '30%',width:'80%' }"
           close-icon="close"
           closeable
           v-model="show"
@@ -44,68 +44,72 @@
 </template>
 
 <script>
-import api from '@/api/api'
+import api from "@/api/api";
 
 export default {
-  data () {
+  data() {
     return {
       pageId: 0,
-      dataObj: '',
-      userId: '',
+      dataObj: "",
+      userId: "",
       list: [],
       showComments: true,
       commentNum: 0,
-      show: false
-    }
+      show: false,
+    };
   },
-  mounted () {
-    this.pageId = this.$route.query.pageId
-    let keyword = ''
+  mounted() {
+    this.pageId = this.$route.query.pageId;
+    let keyword = "";
 
     if (this.$route.query.phone) {
-      keyword = this.$route.query.phone
+      keyword = this.$route.query.phone;
     }
 
-    api.getUserAPI(keyword).then(res => {
-      this.userId = res.data[0].id
-      api.getCommentsAPI(this.userId, this.pageId).then(res => {
-        let len = res.data.length
+    api.getUserAPI(keyword).then((res) => {
+      this.userId = res.data[0].id;
+      api.getCommentsAPI(this.userId, this.pageId).then((res) => {
+        let len = res.data.length;
         if (len) {
-          this.commentNum = len
-          this.showComments = false
+          this.commentNum = len;
+          this.showComments = false;
         }
         for (let i = 0; i < len; i++) {
-          res.data[i].headimgurl = res.data[i].author.headimgurl + '/64'
+          res.data[i].headimgurl = res.data[i].author.headimgurl + "/64";
         }
-        this.list = res.data
-      })
-    })
+        this.list = res.data;
+      });
+    });
 
-    api.getActivityAPI().then(res => {
-      res.data.forEach(ele => {
+    api.getActivityAPI().then((res) => {
+      res.data.forEach((ele) => {
         // eslint-disable-next-line eqeqeq
         if (ele.id.toString() == this.pageId) {
-          this.dataObj = ele
-          let dateTime = this.dataObj.created_at
-          let firstdateTime = dateTime.slice(0, 10)
-          let lastdateTime = dateTime.slice(11, 16)
-          dateTime = firstdateTime + ' ' + lastdateTime
-          this.dataObj.dateTime = dateTime
+          this.dataObj = ele;
+          let dateTime = this.dataObj.created_at;
+          let firstdateTime = dateTime.slice(0, 10);
+          let lastdateTime = dateTime.slice(11, 16);
+          dateTime = firstdateTime + " " + lastdateTime;
+          this.dataObj.dateTime = dateTime;
+          document.title = this.dataObj.title;
+          window.desc = this.dataObj.title;
         }
-      })
-    })
+      });
+    });
   },
   methods: {
-    link () {
+    link() {
       if (this.$route.query.mobile) {
-        this.$router.push({ name: 'comments', query: { pageId: this.pageId, userId: this.userId } })
+        this.$router.push({
+          name: "comments",
+          query: { pageId: this.pageId, userId: this.userId },
+        });
       } else {
-        this.show = !this.show
+        this.show = !this.show;
       }
-    }
-
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

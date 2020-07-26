@@ -102,9 +102,9 @@
 </template>
 
 <script>
-import api from '@/api/api'
+import api from "@/api/api";
 export default {
-  data () {
+  data() {
     return {
       listEnd: [],
       listUnderway: [],
@@ -113,57 +113,65 @@ export default {
       immediate_check: false,
       loadNum: 1,
       active: 0,
-      openid: '',
-      mobile: ''
-    }
+      openid: "",
+      mobile: "",
+    };
   },
-  created () {
-    this.openid = this.$route.query.openid
-    this.mobile = this.$route.query.mobile
+  created() {
+    this.openid = this.$route.query.openid;
+    this.mobile = this.$route.query.mobile;
   },
-  mounted () {
-    api.getVoteListSuccessAPI().then(res => {
-      if (res.status === 200) {
-        this.listUnderway = res.data
-        // console.log(res)
+  mounted() {
+    document.title = "社区投票";
 
+    api.getVoteListSuccessAPI().then((res) => {
+      if (res.status === 200) {
+        this.listUnderway = res.data;
         for (let i = 0; i < this.listUnderway.length; i++) {
-          let DataTime = this.listUnderway[i].created_at
-          let firstDataTime = DataTime.slice(0, 10)
-          let lastDataTime = DataTime.slice(11, 19)
-          DataTime = firstDataTime + ' ' + lastDataTime
-          this.listUnderway[i].DataTime = DataTime
-          this.listUnderway[i].openid = this.openid
-          this.listUnderway[i].mobile = this.mobile
+          let DataTime = this.listUnderway[i].created_at;
+          let firstDataTime = DataTime.slice(0, 10);
+          let lastDataTime = DataTime.slice(11, 19);
+          DataTime = firstDataTime + " " + lastDataTime;
+          this.listUnderway[i].DataTime = DataTime;
+          this.listUnderway[i].openid = this.openid;
+          this.listUnderway[i].mobile = this.mobile;
         }
       }
-    })
-    api.getVoteListEndAPI().then(res => {
+    });
+    api.getVoteListEndAPI().then((res) => {
       if (res.status === 200) {
-        this.listEnd = res.data
+        this.listEnd = res.data;
         for (let i = 0; i < this.listEnd.length; i++) {
-          let DataTime = this.listEnd[i].created_at
-          let firstDataTime = DataTime.slice(0, 10)
-          let lastDataTime = DataTime.slice(11, 19)
-          DataTime = firstDataTime + ' ' + lastDataTime
+          let DataTime = this.listEnd[i].created_at;
+          let firstDataTime = DataTime.slice(0, 10);
+          let lastDataTime = DataTime.slice(11, 19);
+          DataTime = firstDataTime + " " + lastDataTime;
 
-          this.listEnd[i].DataTime = DataTime
-          this.listEnd[i].openid = this.openid
+          this.listEnd[i].DataTime = DataTime;
+          this.listEnd[i].openid = this.openid;
+          window.desc = this.listUnderway[0].title;
         }
       }
-    })
+    });
   },
   methods: {
-    toText (text) {
-      if (text) { return text.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ') }
+    toText(text) {
+      if (text) {
+        return text
+          .replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, "")
+          .replace(/<[^>]+?>/g, "")
+          .replace(/\s+/g, " ")
+          .replace(/ /g, " ")
+          .replace(/>/g, " ");
+      }
     },
-    toImg (text) {
-      text = text.slice(text.indexOf('src="') + 5)
-      text = text.slice(0, text.indexOf('"'))
-      return text
-    }
-  }
-}
+    toImg(text) {
+      text = text.slice(text.indexOf('src="') + 5);
+      text = text.slice(0, text.indexOf('"'));
+      return text;
+    },
+  },
+};
 </script>
 
 <style lang="scss"  scoped>
@@ -186,7 +194,7 @@ export default {
   border-bottom: 5px solid transparent;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  content: '';
+  content: "";
   display: inline-block;
   transform: rotate(90deg);
   position: relative;
