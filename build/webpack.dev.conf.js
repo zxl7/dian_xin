@@ -51,7 +51,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         changeOrigin: true,
       },
       '/mobile': {
-        target: 'http://wsq.softspirit.cn',
+        target: 'http://wsq.gxzzzx.cn',
         changeOrigin: true,
       },
 

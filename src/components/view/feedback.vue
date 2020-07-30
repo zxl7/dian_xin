@@ -7,7 +7,7 @@
       </div>
       <img alt class="tickling_img" src="https://source2.softspirit.cn/wsq/hd_fb.jpg" />
     </div>
-    <div class="tickling_main">
+<!--    <div class="tickling_main">-->
       <!-- <van-list
         :finished="finished"
         :immediate-check="immediate_check"
@@ -15,38 +15,25 @@
         finished-text="没有更多了"
         v-model="loading"
       > -->
-        <div :key="item.id" class="tickling_main_center" v-for="item in list">
-          <aside class="tickling_main_left">
-            <i class="icon-icon_baseline-feedback"></i>
-          </aside>
-          <aside class="tickling_main_right">
-            <h2 v-if="item.type1 ==1">咨询</h2>
-            <h2 v-if="item.type1 ==2">求助</h2>
-            <h2 v-if="item.type1 ==3">建议</h2>
-            <h2 v-if="item.type1 ==4">投诉</h2>
-            <h2 v-if="item.type1 ==5">其他</h2>
-            <h3>{{item.detail}}</h3>
-            <p>
-              <span>{{item.createTime}}</span>
-              <span class v-if="item.status == 0">待领取</span>
-              <span class="in_head" v-if="item.status == 1">处理中</span>
-              <span class="end" v-if="item.status == 2">完结</span>
-              <span class v-if="item.status == 3">退单</span>
-              <span class v-if="item.status == 5">转派天阙</span>
-              <span class v-if="item.status == 7">天阙处理完成</span>
-            </p>
-            <p class="tickling_main_right_reply">{{item.dealSubjust}}</p>
-          </aside>
-        </div>
-      <!-- </van-list> -->
-    </div>
+    <van-collapse v-model="activeNames" :key="item.id" class="tickling_main_center" v-for="(item,i) in list">
+      <van-collapse-item class="titleCollapse" :title="item.type" :name="i">
+        <van-steps :active="item.active" direction="vertical">
+          <van-step>待领取<span class="stepTime">{{item.createTime}}</span></van-step>
+          <van-step>处理中</van-step>
+          <van-step>完结</van-step>
+          <van-step>退单</van-step>
+          <van-step>转派天阙</van-step>
+          <van-step>天阕处理完成</van-step>
+        </van-steps>
+      </van-collapse-item>
+    </van-collapse>
   </div>
 </template>
 
 <script>
 import api from '@/api/api'
 export default {
-  data () {
+  data: function () {
     return {
       list: [],
       loading: false,
@@ -54,8 +41,8 @@ export default {
       immediate_check: false,
       loadNum: 1,
       name: '',
-      callNumber: ''
-
+      callNumber: '',
+      activeNames: ['1']
     }
   },
   mounted () {
@@ -78,6 +65,78 @@ export default {
         }
       }
     })
+    api.postFeedBackListAPI(json).then((res) => {
+      if (res.status === 200) {
+        this.list = res.data.data.list
+        if (!this.list) {
+          this.$toast(res.data.resultDetail)
+        }
+      }
+      this.list.forEach((el) => {
+        switch (el.type1) {
+          case "1": {
+            el.type = "咨询";
+            break;
+          }
+          case "2": {
+            el.type = "投诉";
+            break;
+          }
+          case "3": {
+            el.type = "求助";
+            break;
+          }
+          case "4": {
+            el.type = "建议";
+            break;
+          }
+          case "5": {
+            el.type = "意见";
+            break;
+          }
+          case "6": {
+            el.type = "其他";
+            break;
+          }
+          case "7": {
+            el.type = "治安隐患";
+            break;
+          }
+          default: {
+          }
+        }
+        switch (el.status) {
+          case "0": {
+            el.active = 0;
+            break;
+          }
+          case "1": {
+            el.active = 1;
+            break;
+          }
+          case "2": {
+            el.active = 2;
+            break;
+          }
+          case "3": {
+            el.active = 3;
+            break;
+          }
+          case "5": {
+            el.active = 4;
+            break;
+          }
+          case "7": {
+            el.active = 5;
+            break;
+          }
+          default: {
+          }
+        }
+        console.log(el.active)
+      });
+      console.log(this.list)
+    });
   },
   methods: {
     back () {
@@ -109,7 +168,7 @@ export default {
 }
 </script>
 
-<style lang="scss"  scoped>
+<style lang="scss" scoped>
 .tabnar-header {
   text-align: center;
   position: relative;
@@ -159,6 +218,13 @@ export default {
     }
   }
 }
+.van-collapse-item{
+  width: 100%;
+}
+.stepTime{
+  display: inline-block;
+  padding-left: 20px;
+}
 .tickling_main {
   border-radius: 8px;
   background: #fff;
@@ -171,7 +237,7 @@ export default {
 .tickling_main_center {
   display: flex;
   margin: 0px 20px;
-  padding: 24px 0px 20px;
+  padding: 10px 0px;
   border-bottom: 1px solid #f4f4f5;
 }
 
