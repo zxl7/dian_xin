@@ -14,12 +14,11 @@
     </div>
     <div class="page-comments">
       <div class="page-comments-divider"></div>
-      <div class="page-comments-header">
-        <span v-if="!this.commentNum">评论</span>
-        <span v-else>评论（{{commentNum}}）</span>
-        <a @click="link()">写短评</a>
-      </div>
-
+      <!--      <div class="page-comments-header">-->
+      <!--        <span v-if="!this.commentNum">评论</span>-->
+      <!--        <span v-else>评论（{{commentNum}}）</span>-->
+      <!--        <a @click="link()">写短评</a>-->
+      <!--      </div>-->
       <div class="no-page-comments" v-show="showComments">
         <span>这篇文章还没有评论</span>
       </div>
@@ -32,9 +31,24 @@
           <div class="comment-details">
             <div class="comment-author-name">{{item.author.name}}</div>
             <div class="comment-body">{{item.body}}</div>
-            <div class="comment-created_at">{{item.created_at}}</div>
           </div>
         </div>
+      </div>
+      <div id="writeRemote" v-if="status === '进行中'">
+        <van-cell title="写评论..." icon="chat-o" @click="showWritePop()"></van-cell>
+        <van-popup v-model="showPop" closeable round position="bottom">
+          <div class="popTitle">写评论</div>
+          <div class="commentSection">
+              <textarea
+                autofocus="autofocus"
+                class="commentInput"
+                placeholder="请输入..."
+                rows="10"
+                v-model="message"
+              />
+          </div>
+          <div class="commentSend" @click="commentSend()">提交</div>
+        </van-popup>
       </div>
     </div>
     <van-popup
@@ -62,7 +76,7 @@ import api from "@/api/api";
 export default {
   data() {
     return {
-      pageId: 0,
+      pageId: '',
       activityId: '',
       status: '',
       dataObj: "",
@@ -71,6 +85,8 @@ export default {
       showComments: true,
       commentNum: 0,
       show: false,
+      showPop: false,
+      message: "",
     };
   },
   mounted() {
@@ -110,6 +126,31 @@ export default {
     });
   },
   methods: {
+    showWritePop() {
+      this.showPop = true;
+    },
+    commentSend() {
+      if (this.message) {
+        let data = {
+          comment: {
+            body: this.message,
+          },
+          user_id: this.userId,
+          cms_page_id: this.pageId,
+        };
+        api.postCommentsAPI(data).then((res) => {
+          if (res.status === 200) {
+            this.$toast.success("评论成功,积分+10");
+            setTimeout(() => {
+              // 延迟跳转
+              this.$router.go(-1);
+            }, 1500);
+          }
+        });
+      } else {
+        this.$toast('评论不能为空')
+      }
+    },
     //  重构时间（时间格式，时间）
     dateFormat(fmt, date) {
       date = date ? new Date(date) : new Date();
@@ -161,16 +202,85 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#writeRemote {
+  position:fixed;
+  left:auto;
+  right:auto;
+  _position:absolute;
+  z-index: 1000;
+  margin:0 auto;
+  background: #FBFCFF;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #E9EAEB;
+  padding: 13px 16px 30px 16px;
+  .van-cell{
+    width: 90%;
+    border: 1px solid #F0EFF4;
+    border-radius: 20px;
+    color: #95A4B3;
+  }
+  .van-cell__title{
+    color: #B7C0CA;
+    padding-left: 6px;
+    line-height: 26px;
+  }
+  .van-popup{
+    padding: 0 20px;
+  }
+  .popTitle{
+    font-family: PingFang SC;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #313C56;
+    padding: 16px 0;
+  }
+  .commentSection{
+    padding: 12px 0 16px;
+    .commentInput{
+      width: 90%;
+      height: 97px;
+      background: #FFFFFF;
+      border: 1px solid #F0EFF4;
+      box-sizing: border-box;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: PingFang SC;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 18px;
+      color: #B7C0CA;
+    }
+  }
+  .commentSend{
+    width: 84%;
+    background: #2196F3;
+    border-radius: 8px;
+    font-family: PingFang SC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 12px;
+    margin-bottom: 24px;
+  }
+}
+
 .page {
   flex-grow: 1;
-  padding: 0 15px;
   background-color: white;
 }
 .page-header {
   text-align: left;
   font-size: 18px;
   border-bottom: 1px solid #e9e9e9;
-
+  padding: 0 15px;
   .page-title {
     font-size: 20px;
     color: #615f6c;
@@ -209,7 +319,7 @@ export default {
 }
 
 .page-content {
-  padding-top: 24px;
+  padding: 24px 15px 0;
   img{
     width: 345px;
     height: 160px;
@@ -230,9 +340,10 @@ export default {
 }
 
 .page-comments {
+  margin-bottom: 92px;
   .page-comments-divider {
     margin: 0 -10px;
-    background-color: #f2f2f2;
+    background-color: #F4F4F8;
     height: 10px;
     box-shadow: inset 0 1px 1px 0 rgba(100, 100, 100, 0.1);
   }
@@ -295,35 +406,35 @@ export default {
   margin: 23px 0;
 
   .comment-author-header {
-    margin-right: 8px;
-    width: 3rem;
-    height: 3rem;
-
+    margin: 0 16px 0 15px;
+    width: 40px;
+    height: 40px;
     img {
       width: 100%;
       display: block;
-      border-radius: 50%;
+      border-radius: 8px;
     }
   }
   .comment-details {
     text-align: left;
     flex-grow: 1;
     width: 0.5rem;
+    font-family: PingFang SC;
+    font-style: normal;
     .comment-author-name {
-      font-size: 1.25rem;
-      color: #888;
-      line-height: 1.5em;
       position: relative;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 16px;
+      color: #313C56;
     }
     .comment-body {
-      font-size: 16px;
-      color: #615f6c;
-      line-height: 1.5em;
       padding: 4px 0;
-    }
-    .comment-created_at {
-      font-size: 16px;
-      color: #bcbcbc;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 18px;
+      color: #95A4B3;
+
     }
   }
 }
