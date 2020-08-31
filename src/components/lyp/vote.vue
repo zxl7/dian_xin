@@ -13,7 +13,7 @@
         <van-tab title="全部">
           <div :key="item.id" v-for="(item,index) in  allActivity">
             <router-link :to="{name:item.name,query:{status:item.status, tableId:item.id, userIndex:index,openid:item.openid,mobile:item.mobile,type:item.labelNum}}"
-                          class="vote_a">
+                         class="vote_a">
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
@@ -30,7 +30,7 @@
         <van-tab title="投票">
           <div :key="item.id" v-for="(item,index) in vote">
             <router-link :to="{name:item.name,query:{status:item.status,tableId:item.id,userIndex:index,openid:item.openid,mobile:item.mobile,type:item.labelNum}}"
-              class="vote_a">
+                         class="vote_a">
               <div class="vote_main_center">
                 <aside class="vote_main_left">
                   <h2>{{item.title}}</h2>
@@ -153,6 +153,7 @@ export default {
     await api.getActivityAPILyp(this.activityId).then((res) => {
       res.data.forEach(item => {
         let obj = {};
+        obj.createdTime = item.created_at
         obj.dataTime = this.dateFormat("YYYY/mm/dd", item.created_at)
         obj.mobile = this.mobile;
         obj.title = item.title;
@@ -169,10 +170,10 @@ export default {
     this.allActivity = this.vote.concat(this.activity)
     this.allActivity = this.allActivity.concat(this.appraise)
     // 时间排序
-    this.vote = this.vote.sort((a, b) => b.dataTime < a.dataTime ? -1 : 1)
-    this.appraise = this.appraise.sort((a, b) => b.dataTime < a.dataTime ? -1 : 1)
-    this.activity = this.activity.sort((a, b) => b.dataTime < a.dataTime ? -1 : 1)
-    this.allActivity = this.allActivity.sort((a, b) => b.dataTime < a.dataTime ? -1 : 1)
+    this.vote = this.vote.sort((a, b) => b.createdTime < a.createdTime ? -1 : 1)
+    this.appraise = this.appraise.sort((a, b) => b.createdTime < a.createdTime ? -1 : 1)
+    this.activity = this.activity.sort((a, b) => b.createdTime < a.createdTime ? -1 : 1)
+    this.allActivity = this.allActivity.sort((a, b) => b.createdTime < a.createdTime ? -1 : 1)
     document.title = "社区活动";
   },
   methods: {
@@ -218,6 +219,7 @@ export default {
       let obj = {}
       obj.title = data.title
       obj.id = data.id
+      obj.createdTime = data.created_at
       obj.dataTime = this.dateFormat("YYYY/mm/dd", data.created_at)
       obj.desc = this.toText(data.description)
       obj.imgSrc = this.toImg(data.description)
