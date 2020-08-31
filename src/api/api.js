@@ -50,6 +50,24 @@ export default {
   // 查询评论
   getCommentsAPI (userId, pageId) {
     return http.get('/api/v4/comments?user_id=' + userId + ' &cms_page_id=' + pageId)
+  },
+  //  查询社区标签下的所有活动
+  getTagActivity(tagId) {
+    return http.get(`/api/v4/tags/${tagId}/taggable_forms`, '')
+  },
+  // 表单增加数据
+  postFormData(formId, data) {
+    return http.post(`/api/v4/forms/${formId}/responses`, data)
+  },
+  getFormData(formId) {
+    return http.get(`/api/v4/forms/${formId}`, '')
+  },
+  // 活动征集
+  getActivityAPILyp (activityId) {
+    return http.get(`/api/v4/categories/${activityId}/pages`, '')
+  },
+  postUpBehavior(data) {
+    return http.post(`/mc_admin/up_behavior`, data)
   }
 
 }
