@@ -47,14 +47,17 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     historyApiFallback: true,
     proxy: {
       '/api': {
-        target: 'http://wsq.gxzzzx.cn',
+        target: 'https://wsq.gxzzzx.cn',
         changeOrigin: true,
       },
       '/mobile': {
-        target: 'http://wsq.softspirit.cn',
+        target: 'https://wsq.gxzzzx.cn',
         changeOrigin: true,
       },
-
+      '/mc_admin': {
+        target: 'https://wsq.gxzzzx.cn',
+        changeOrigin: true,
+      },
     },
 
   },

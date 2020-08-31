@@ -15,8 +15,8 @@
         finished-text="没有更多了"
         v-model="loading"
       > -->
-    <van-collapse v-model="activeNames" :key="item.id" class="tickling_main_center" v-for="(item,i) in list">
-      <van-collapse-item class="titleCollapse" :title="item.type" :name="i">
+    <van-collapse v-model="activeNames" :key="item.id" class="tickling_main_center" v-for="item in list">
+      <van-collapse-item class="titleCollapse" :title="item.type" :name="item.id">
         <van-steps :active="item.active" direction="vertical">
           <van-step>待领取<span class="stepTime">{{item.createTime}}</span></van-step>
           <van-step>处理中</van-step>
@@ -42,29 +42,27 @@ export default {
       loadNum: 1,
       name: '',
       callNumber: '',
-      activeNames: ['1']
+      activeNames: ['200']
     }
   },
   mounted () {
     let query = this.$route.query
     this.name = query.name || window.name || ''
     this.phone = query.phone || window.phone || ''
-
     let json = {
       'pageNum': this.loadNum,
       'pageSize': '30',
       'name': this.name,
       'callNumber': this.phone
     }
-
-    api.postFeedBackListAPI(json).then(res => {
-      if (res.status === 200) {
-        this.list = res.data.data.list
-        if (!this.list) {
-          this.$toast(res.data.resultDetail)
-        }
-      }
-    })
+    // api.postFeedBackListAPI(json).then(res => {
+    //   if (res.status === 200) {
+    //     this.list = res.data.data.list
+    //     if (!this.list) {
+    //       this.$toast(res.data.resultDetail)
+    //     }
+    //   }
+    // })
     api.postFeedBackListAPI(json).then((res) => {
       if (res.status === 200) {
         this.list = res.data.data.list
@@ -133,9 +131,7 @@ export default {
           default: {
           }
         }
-        console.log(el.active)
       });
-      console.log(this.list)
     });
   },
   methods: {
