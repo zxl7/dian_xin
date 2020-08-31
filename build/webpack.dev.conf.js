@@ -58,7 +58,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         target: 'https://wsq.gxzzzx.cn',
         changeOrigin: true,
       },
-
     },
 
   },
