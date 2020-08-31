@@ -8,7 +8,7 @@ import './assets/icon/style.css'
 import './assets/icon/styleTwo.css'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
-import { List, Tab, Tabs, Toast, Loading, Popup, Collapse, CollapseItem, Step, Steps } from 'vant'
+import { List, Tab, Tabs, Toast, Loading, Popup, Collapse, CollapseItem, Step, Steps, Cell } from 'vant'
 
 Vue.prototype.$axios = axios
 
@@ -24,6 +24,7 @@ Vue.use(Collapse)
 Vue.use(CollapseItem)
 Vue.use(Step)
 Vue.use(Steps)
+Vue.use(Cell)
 
 Vue.config.productionTip = false
 
